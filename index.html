@@ -27,6 +27,7 @@
 
     <script src="taskManager.js" defer></script>
     <script src="tableHeader.js" defer></script>
+    <script src="accounts.js" defer></script>
     <script src="main.js" defer></script>
 
   
@@ -76,18 +77,17 @@
             <div class="ui checkbox">
               <input type="checkbox" name="tweeting">
               <label>Tweeting</label>
+              <input type="text" name="tweetingInput" placeholder="Enter tweet link...">
             </div>
             <div class="ui checkbox">
               <input type="checkbox" name="retweeting">
               <label>Retweeting</label>
+              <input type="text" name="retweetingInput" placeholder="Enter retweet text...">
             </div>
             <div class="ui checkbox">
               <input type="checkbox" name="liking">
               <label>Liking</label>
-            </div>
-            <div class="ui checkbox">
-              <input type="checkbox" name="replying">
-              <label>Replying</label>
+              <input type="text" name="likingInput" placeholder="Enter liking text...">
             </div>
             <div class="ui checkbox">
               <input type="checkbox" name="mentioning">
@@ -96,35 +96,25 @@
             <div class="ui checkbox">
               <input type="checkbox" name="directMessaging">
               <label>Direct Messaging</label>
-            </div>
-            <div class="ui checkbox">
-              <input type="checkbox" name="hashtagging">
-              <label>Hashtagging</label>
+              <input type="text" name="directMessagingInput" placeholder="Enter direct messaging text...">
             </div>
             <div class="ui checkbox">
               <input type="checkbox" name="following">
               <label>Following</label>
+              <div class="field following-input hidden">
+                <label>Choose a file</label>
+                <input type="file" name="followingFile">
+              </div>
             </div>
+            
             <div class="ui checkbox">
               <input type="checkbox" name="unfollowing">
               <label>Unfollowing</label>
-            </div>
-            <div class="ui checkbox">
-              <input type="checkbox" name="blocking">
-              <label>Blocking</label>
-            </div>
-            <div class="ui checkbox">
-              <input type="checkbox" name="reporting">
-              <label>Reporting</label>
             </div>
           </div>
           <div class="field">
             <label>Follow Lists</label>
             <input type="text" name="followLists" placeholder="Enter follow lists...">
-          </div>
-          <div class="field">
-            <label>Hashtags</label>
-            <input type="text" name="hashtags" placeholder="Enter hashtags...">
           </div>
         </form>
       </div>
@@ -134,7 +124,6 @@
       </div>
     </div>
     
-
 
     <div class="ui mobile only padded grid">
       <div class="ui top fixed borderless fluid inverted menu">
@@ -162,7 +151,7 @@
         id="sidebar"
       >
         <div class="ui vertical borderless fluid text menu">
-          <a class="active item">Accounts</a>
+          <a class="active item" id="accounts">Accounts</a>
           <a class="item">Groups</a>
           <div class="ui hidden divider"></div>
           <a class="item" id="tasks">Tasks</a>

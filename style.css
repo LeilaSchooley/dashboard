@@ -95,4 +95,15 @@ body {
 }
 
 
+.ui.checkbox {
+  display: block;
+  margin-bottom: 10px;
+}
 
+.ui.checkbox input[type="checkbox"] {
+  margin-right: 10px;
+}
+#taskManagerModal .content {
+  max-height: 400px;
+  overflow-y: auto;
+}

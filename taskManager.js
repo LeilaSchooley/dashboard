@@ -1,3 +1,16 @@
+
+
+let createToDoList = (taskName, tweeting, retweeting, liking, replying, mentioning, directMessaging, hashtagging, following, unfollowing, blocking, reporting) => {
+  return {
+    title,
+    description,
+    dueDate,
+    priority,
+    id,
+    notes,
+  };
+};
+
 function addTask() {
   const taskName = $('input[name="taskName"]').val();
   const tweeting = $('input[name="tweeting"]').is(":checked");
@@ -9,8 +22,7 @@ function addTask() {
   const hashtagging = $('input[name="hashtagging"]').is(":checked");
   const following = $('input[name="following"]').is(":checked");
   const unfollowing = $('input[name="unfollowing"]').is(":checked");
-  const blocking = $('input[name="blocking"]').is(":checked");
-  const reporting = $('input[name="reporting"]').is(":checked");
+
 
   console.log("Task Name:", taskName);
   console.log("Tweeting:", tweeting);
@@ -22,51 +34,38 @@ function addTask() {
   console.log("Hashtagging:", hashtagging);
   console.log("Following:", following);
   console.log("Unfollowing:", unfollowing);
-  console.log("Blocking:", blocking);
-  console.log("Reporting:", reporting);
-  // Add task to the task list
-  // ...
-}
 
+  // Add task to the task list
+  // ...#
+
+
+  let newTodoList = createToDoList(
+    taskName,
+    tweeting,
+    retweeting,
+    liking,
+    replying,
+    mentioning,
+    direct,
+    hashtagging,
+    following,
+    unfollowing
+  );
+
+
+  createTaskTable(newTodoList)
+}
 
 function createTaskTable(tasks) {
   // Get a reference to the table element
   const table = document.querySelector('table');
 
   // Clear any existing rows from the table
-  table.innerHTML = '';
-
-  // Create the table header element
-  const tableHeader = document.createElement('thead');
-
-  // Create the table header row element
-  const tableHeaderRow = document.createElement('tr');
-
-  // Create the table header cells (th) and add text content
-  const groupCell = document.createElement('th');
-  groupCell.textContent = 'Group';
-  const accountCell = document.createElement('th');
-  accountCell.textContent = 'Account';
-  const taskCell = document.createElement('th');
-  taskCell.textContent = 'Task';
-  const statusCell = document.createElement('th');
-  statusCell.textContent = 'Status';
-  const actionsCell = document.createElement('th');
-  actionsCell.textContent = 'Actions';
-
-  // Append the table header cells to the table header row
-  tableHeaderRow.appendChild(groupCell);
-  tableHeaderRow.appendChild(accountCell);
-  tableHeaderRow.appendChild(taskCell);
-  tableHeaderRow.appendChild(statusCell);
-  tableHeaderRow.appendChild(actionsCell);
-
-  // Append the table header row to the table header
-  tableHeader.appendChild(tableHeaderRow);
 
   // Create the table body element
-  const tableBody = document.createElement('tbody');
-
+  let tableBody = document.querySelector('tbody');
+  if(!tableBody) tableBody = document.createElement('tbody');
+  
   // Loop through the tasks array and create a table row for each task
   tasks.forEach(task => {
     // Create a table row element
@@ -74,7 +73,7 @@ function createTaskTable(tasks) {
 
     // Create the table cells (td) and add text content
     const groupCell = document.createElement('td');
-    groupCell.textContent = task.group;
+    groupCell.textContent = "task.group";
     const accountCell = document.createElement('td');
     accountCell.textContent = task.account;
     const taskCell = document.createElement('td');
@@ -109,8 +108,6 @@ function createTaskTable(tasks) {
     tableBody.appendChild(tableRow);
   });
 
-  // Append the table header and body to the table element
-  table.appendChild(tableHeader);
+  // Append the table body to the table element
   table.appendChild(tableBody);
 }
-
