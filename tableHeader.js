@@ -1,6 +1,6 @@
 async function addTableHeader() {
   // Create the table header element
-  const tableHeader = document.createElement("thead");
+  const tableHeader = document.querySelector("thead");
 
   // Create the table header row element
   const tableHeaderRow = document.createElement("tr");

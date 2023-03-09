@@ -1,37 +1,4 @@
-async function loadAccountData() {
-  try {
-    // const response = await fetch("/api/accounts");
-    // const data = await response.json();
 
-    let data = [
-      { name: "John Doe", status: "Active" },
-      { name: "Jane Smith", status: "Inactive" },
-      { name: "Bob Johnson", status: "Pending" },
-    ];
-
-    const tbody = document.querySelector("tbody");
-
-    data.forEach((account, index) => {
-      const row = document.createElement("tr");
-
-      const numberColumn = document.createElement("td");
-      numberColumn.textContent = index + 1;
-      row.appendChild(numberColumn);
-
-      const nameColumn = document.createElement("td");
-      nameColumn.textContent = account.name;
-      row.appendChild(nameColumn);
-
-      const statusColumn = document.createElement("td");
-      statusColumn.textContent = account.status;
-      row.appendChild(statusColumn);
-
-      tbody.appendChild(row);
-    });
-  } catch (error) {
-    console.error(error);
-  }
-}
 
 $(document).ready(async function () {
   await addTableHeader();
@@ -39,15 +6,34 @@ $(document).ready(async function () {
   $(".ui.toggle.button").click(function () {
     $(".mobile.only.grid .ui.vertical.menu").toggle(100);
   });
-  loadAccountData();
+  await loadAccountData();
   let tbody = document.querySelector("tbody");
   let rows = tbody.querySelectorAll("tr");
   const count = rows.length;
   const countElement = document.createElement("div");
   countElement.textContent = `Total accounts: ${count}`;
 
+  $("#tasks").click(function () {
+    $("tbody").remove();
+    $("thead").remove();
+
+    const tasks = [
+      { group: 'Group A', account: 'Account 1', task: 'Tweet', status: 'Pending' },
+      { group: 'Group B', account: 'Account 2', task: 'Retweet', status: 'Completed' },
+      { group: 'Group A', account: 'Account 3', task: 'Follow', status: 'Pending' },
+    ];
+
+    createTaskTable(tasks);
+  });
+
+
+
   $("#taskManagerButton").click(function () {
     $("#taskManagerModal").modal("show");
+
+    $("#cancelTaskButton").click(function () {
+      $("#taskManagerModal").modal("hide");
+    });
   });
 
   $("#addTaskButton").click(function () {

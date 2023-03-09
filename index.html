@@ -25,9 +25,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" ></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
 
-    <script src="main.js" defer></script>
     <script src="taskManager.js" defer></script>
     <script src="tableHeader.js" defer></script>
+    <script src="main.js" defer></script>
 
   
 
@@ -41,7 +41,7 @@
           <div class="item">
             <div class="ui small input"><input placeholder="Search..." /></div>
           </div>
-          <a class="item"id="taskManagerButton">Task Manager</a> <a class="item">Scrape Tools</a>
+          <a class="item"id="taskManagerButton">Add Task</a> <a class="item">Scrape Tools</a>
           <a class="item">Settings</a>
 
      <div id="app" class="dropdown-container">
@@ -165,7 +165,7 @@
           <a class="active item">Accounts</a>
           <a class="item">Groups</a>
           <div class="ui hidden divider"></div>
-          <a class="item">Settings</a>
+          <a class="item" id="tasks">Tasks</a>
 
         </div>
       </div>
