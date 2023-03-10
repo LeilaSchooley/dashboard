@@ -1,3 +1,5 @@
+
+
 const bulkImportButton = document.getElementById("add-bulk");
 const bulkImportModal = document.getElementById("bulkImportModal");
 const bulkImportFileInput = bulkImportModal.querySelector('input[name="bulkImportFile"]');
@@ -39,26 +41,7 @@ const accountColumnNames = [
   "Actions",
 ];
 
-const tasks = [
-  {
-    group: "Group A",
-    account: "Account 1",
-    task: "Tweet",
-    status: "Pending",
-  },
-  {
-    group: "Group B",
-    account: "Account 2",
-    task: "Retweet",
-    status: "Completed",
-  },
-  {
-    group: "Group A",
-    account: "Account 3",
-    task: "Follow",
-    status: "Pending",
-  },
-];
+
 
 const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
 
@@ -177,7 +160,26 @@ $(document).ready(async function () {
     }
   });
 
-  //await loadAccountData();
+
+    
+  // Get all the edit buttons and add event listeners to trigger the editTask function
+  const editButtons = document.querySelectorAll('.edit-button');
+  editButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const taskId = button.dataset.id;
+      editTask(taskId);
+    });
+  });
+
+  // Get all the delete buttons and add event listeners to trigger the deleteTask function
+  const deleteButtons = document.querySelectorAll('.delete-button');
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const taskId = button.dataset.id;
+      deleteTask(taskId);
+    });
+  });
+
 
   updateTableRowCount();
 

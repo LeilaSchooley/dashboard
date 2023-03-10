@@ -1,5 +1,9 @@
 
-let createToDoList = (taskName, tweeting, retweeting, liking, replying, mentioning, directMessaging, hashtagging, following, unfollowing, blocking, reporting) => {
+
+
+
+
+let Task = (taskName, tweeting, retweeting, liking, replying, mentioning, directMessaging, hashtagging, following, unfollowing, blocking, reporting) => {
   return {
     taskName,
     tweeting,
@@ -42,7 +46,7 @@ function addTask() {
   // ...#
 
 
-  let newTodoList = createToDoList(
+  let newTask = Task(
     taskName,
     tweeting,
     retweeting,
@@ -56,12 +60,9 @@ function addTask() {
   );
     
 
-  createTaskTable(newTodoList)
+  createTaskTable(newTask)
 }
 
-function renderAllTaskTables(tasks) {
-  tasks.forEach((element) => createTaskTable(element));
-}
 
 function createTaskTable(task) {
   // Get a reference to the table element
@@ -115,4 +116,8 @@ function createTaskTable(task) {
 
 // Append the table body to the table element
 table.appendChild(tableBody);
+}
+
+function renderAllTaskTables(tasks) {
+  tasks.forEach((element) => createTaskTable(element));
 }
