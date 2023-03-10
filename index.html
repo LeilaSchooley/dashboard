@@ -84,6 +84,30 @@
       </div>
     </div>
     
+    <div class="ui small modal" id="bulkImportModal">
+      <div class="header">Bulk Import Accounts</div>
+      <div class="content">
+        <form class="ui form">
+          <div class="field">
+            <label>Choose a file</label>
+            <input type="file" name="bulkImportFile" accept=".csv, .txt">
+          </div>
+          <div class="field">
+            <textarea id="fileDisplay" rows="10" placeholder="File contents will appear here" readonly></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="actions">
+        <button class="ui button" id="readFileButton">Read File</button>
+        <button class="ui button" id="clearInputButton">Clear Input</button>
+        <div class="ui buttons">
+          <button class="ui cancel button">Cancel</button>
+          <div class="or"></div>
+          <button class="ui positive button" id="bulkImportOkButton">OK</button>
+        </div>
+      </div>
+    </div>
+    
 
 <div id="app" class="dropdown-container">
   <div class="ui basic button" id="add-single">

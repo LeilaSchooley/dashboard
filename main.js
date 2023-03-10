@@ -1,3 +1,11 @@
+const bulkImportButton = document.getElementById("add-bulk");
+const bulkImportModal = document.getElementById("bulkImportModal");
+const bulkImportFileInput = bulkImportModal.querySelector('input[name="bulkImportFile"]');
+const readFileButton = bulkImportModal.querySelector("#readFileButton");
+const clearInputButton = bulkImportModal.querySelector("#clearInputButton");
+const fileDisplay = bulkImportModal.querySelector("#fileDisplay");
+const bulkImportOkButton = bulkImportModal.querySelector("#bulkImportOkButton");
+
 const tweetCheckbox = document.querySelector("input[name='tweeting']");
 const retweetCheckbox = document.querySelector("input[name='retweeting']");
 const likeCheckbox = document.querySelector("input[name='liking']");
@@ -183,6 +191,10 @@ $(document).ready(async function () {
 
   $("#addTaskButton").click(function () {
     addTask();
+
+    removeTable();
+    createTableHeader(taskColumnNames);
+
     renderAllTaskTables(tasks) 
 
   });
@@ -211,6 +223,55 @@ $(document).ready(async function () {
 
     
   });
-
-
+  bulkImportButton.addEventListener("click", () => {
+    bulkImportModal.classList.add("active");
+    document.body.classList.add("modal-open");
+  });
+  
+  bulkImportModal.addEventListener("click", (event) => {
+    if (event.target === bulkImportModal) {
+      bulkImportModal.classList.remove("active");
+      document.body.classList.remove("modal-open");
+      bulkImportFileInput.value = "";
+      fileDisplay.value = "";
+    }
+  });
+  
+  clearInputButton.addEventListener("click", () => {
+    fileDisplay.value = "";
+  });
+  
+  readFileButton.addEventListener("click", () => {
+    const file = bulkImportFileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      const contents = reader.result;
+      fileDisplay.value = contents;
+    };
+    reader.readAsText(file);
+  });
+  
+  bulkImportOkButton.addEventListener("click", () => {
+    // Read file line by line and add to a list
+    const file = bulkImportFileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      const contents = reader.result;
+      const lines = contents.split("\n");
+      const list = [];
+      for (const line of lines) {
+        if (line.trim() !== "") {
+          list.push(line.trim());
+        }
+      }
+      console.log(list);
+    };
+    reader.readAsText(file);
+    
+    bulkImportModal.classList.remove("active");
+    document.body.classList.remove("modal-open");
+    bulkImportFileInput.value = "";
+    fileDisplay.value = "";
+  });
+  
 });

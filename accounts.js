@@ -57,7 +57,7 @@ function saveAccountData() {
   // Do something with the account data object
   console.log(accountData);
 
-  loadAccountData("accountData")
+  loadAccountData(accountData)
 }
 async function loadAllAccountsData(data) {
   data.forEach((account) => loadAccountData(data))
