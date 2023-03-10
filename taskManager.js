@@ -1,13 +1,16 @@
 
-
 let createToDoList = (taskName, tweeting, retweeting, liking, replying, mentioning, directMessaging, hashtagging, following, unfollowing, blocking, reporting) => {
   return {
-    title,
-    description,
-    dueDate,
-    priority,
-    id,
-    notes,
+    taskName,
+    tweeting,
+    retweeting,
+    liking,
+    replying,
+    mentioning,
+    directMessaging,
+    hashtagging,
+    following,
+    unfollowing
   };
 };
 
@@ -46,17 +49,21 @@ function addTask() {
     liking,
     replying,
     mentioning,
-    direct,
+    directMessaging,
     hashtagging,
     following,
     unfollowing
   );
-
+    
 
   createTaskTable(newTodoList)
 }
 
-function createTaskTable(tasks) {
+function renderAllTaskTables(tasks) {
+  tasks.forEach((element) => createTaskTable(element));
+}
+
+function createTaskTable(task) {
   // Get a reference to the table element
   const table = document.querySelector('table');
 
@@ -66,48 +73,46 @@ function createTaskTable(tasks) {
   let tableBody = document.querySelector('tbody');
   if(!tableBody) tableBody = document.createElement('tbody');
   
-  // Loop through the tasks array and create a table row for each task
-  tasks.forEach(task => {
-    // Create a table row element
-    const tableRow = document.createElement('tr');
+  // Create a table row element
+  const tableRow = document.createElement('tr');
 
-    // Create the table cells (td) and add text content
-    const groupCell = document.createElement('td');
-    groupCell.textContent = "task.group";
-    const accountCell = document.createElement('td');
-    accountCell.textContent = task.account;
-    const taskCell = document.createElement('td');
-    taskCell.textContent = task.task;
-    const statusCell = document.createElement('td');
-    statusCell.textContent = task.status;
-    const actionsCell = document.createElement('td');
-    // Add action buttons to the actions cell
-    const editButton = document.createElement('button');
-    editButton.textContent = 'Edit';
-    editButton.addEventListener('click', () => {
-      // Call the editTask function and pass the task object as an argument
-      editTask(task);
-    });
-    actionsCell.appendChild(editButton);
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener('click', () => {
-      // Call the deleteTask function and pass the task object as an argument
-      deleteTask(task);
-    });
-    actionsCell.appendChild(deleteButton);
-
-    // Append the table cells to the table row
-    tableRow.appendChild(groupCell);
-    tableRow.appendChild(accountCell);
-    tableRow.appendChild(taskCell);
-    tableRow.appendChild(statusCell);
-    tableRow.appendChild(actionsCell);
-
-    // Append the table row to the table body
-    tableBody.appendChild(tableRow);
+  // Create the table cells (td) and add text content
+  const groupCell = document.createElement('td');
+  groupCell.textContent = "task.group";
+  const accountCell = document.createElement('td');
+  accountCell.textContent = task.account;
+  const taskCell = document.createElement('td');
+  taskCell.textContent = task.task;
+  const statusCell = document.createElement('td');
+  statusCell.textContent = task.status;
+  const actionsCell = document.createElement('td');
+  // Add action buttons to the actions cell
+  const editButton = document.createElement('button');
+  editButton.textContent = 'Edit';
+  editButton.addEventListener('click', () => {
+    // Call the editTask function and pass the task object as an argument
+    editTask(task);
   });
+  actionsCell.appendChild(editButton);
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+  deleteButton.addEventListener('click', () => {
+    // Call the deleteTask function and pass the task object as an argument
+    deleteTask(task);
+  });
+  actionsCell.appendChild(deleteButton);
 
-  // Append the table body to the table element
-  table.appendChild(tableBody);
+  // Append the table cells to the table row
+  tableRow.appendChild(groupCell);
+  tableRow.appendChild(accountCell);
+  tableRow.appendChild(taskCell);
+  tableRow.appendChild(statusCell);
+  tableRow.appendChild(actionsCell);
+
+  // Append the table row to the table body
+  tableBody.appendChild(tableRow);
+
+
+// Append the table body to the table element
+table.appendChild(tableBody);
 }

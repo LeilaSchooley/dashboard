@@ -103,10 +103,14 @@ $(document).ready(async function () {
 
         createTableHeader(taskColumnNames);
 
-        createTaskTable(tasks);
+
+        renderAllTaskTables(tasks) 
       }
     });
   });
+
+
+
 
   tweetCheckbox.addEventListener("change", (event) => {
     if (event.target.checked) {
@@ -179,17 +183,34 @@ $(document).ready(async function () {
 
   $("#addTaskButton").click(function () {
     addTask();
+    renderAllTaskTables(tasks) 
+
   });
 
-  new Vue({
-    el: "#app",
-    data: {
-      isDropdownVisible: false,
-    },
-    methods: {
-      toggleDropdown() {
-        this.isDropdownVisible = !this.isDropdownVisible;
-      },
-    },
+  const addSingleButton = document.getElementById("add-single");
+  const addAccountModal = document.getElementById("addAccountModal");
+  const cancelAddAccountButton = document.getElementById("cancelAddAccountButton");
+
+  addSingleButton.addEventListener("click", () => {
+    addAccountModal.classList.add("active");
   });
+
+  cancelAddAccountButton.addEventListener("click", () => {
+    addAccountModal.classList.remove("active");
+  });
+
+  addAccountModal.addEventListener("click", (event) => {
+    if (event.target === addAccountModal) {
+      addAccountModal.classList.remove("active");
+    }
+  });
+
+
+  $("#addAccountButton").click(function () {
+    saveAccountData();
+
+    
+  });
+
+
 });

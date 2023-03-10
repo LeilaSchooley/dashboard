@@ -1,34 +1,66 @@
-async function loadAccountData() {
-  try {
-    // const response = await fetch("/api/accounts");
-    // const data = await response.json();
+async function loadAccountData(accountData) {
+  const tbody = document.querySelector("tbody");
+  const row = document.createElement("tr");
 
-    let data = [
-      { name: "John Doe", status: "Active" },
-      { name: "Jane Smith", status: "Inactive" },
-      { name: "Bob Johnson", status: "Pending" },
-    ];
+  const groupColumn = document.createElement("td");
+  groupColumn.textContent = "Group";
+  row.appendChild(groupColumn);
 
-    const tbody = document.querySelector("tbody");
+  const usernameColumn = document.createElement("td");
+  usernameColumn.textContent = accountData.username;
+  row.appendChild(usernameColumn);
 
-    data.forEach((account, index) => {
-      const row = document.createElement("tr");
+  const proxyColumn = document.createElement("td");
+  proxyColumn.textContent = accountData.proxy;
+  row.appendChild(proxyColumn);
 
-      const numberColumn = document.createElement("td");
-      numberColumn.textContent = index + 1;
-      row.appendChild(numberColumn);
+  const postsColumn = document.createElement("td");
+  postsColumn.textContent = "100";
+  row.appendChild(postsColumn);
 
-      const nameColumn = document.createElement("td");
-      nameColumn.textContent = account.name;
-      row.appendChild(nameColumn);
+  const followingColumn = document.createElement("td");
+  followingColumn.textContent = "200";
+  row.appendChild(followingColumn);
 
-      const statusColumn = document.createElement("td");
-      statusColumn.textContent = account.status;
-      row.appendChild(statusColumn);
+  const followersColumn = document.createElement("td");
+  followersColumn.textContent = "300";
+  row.appendChild(followersColumn);
 
-      tbody.appendChild(row);
-    });
-  } catch (error) {
-    console.error(error);
-  }
+  const statusColumn = document.createElement("td");
+  statusColumn.textContent = "Active";
+  row.appendChild(statusColumn);
+
+  const settingsColumn = document.createElement("td");
+  settingsColumn.textContent = "Settings";
+  row.appendChild(settingsColumn);
+
+  const actionsColumn = document.createElement("td");
+  actionsColumn.textContent = "Actions";
+  row.appendChild(actionsColumn);
+  tbody.appendChild(row);
+  return row;
+}
+
+
+
+function saveAccountData() {
+  const username = document.querySelector('input[name="username"]').value;
+  const password = document.querySelector('input[name="password"]').value;
+  const proxy = document.querySelector('input[name="proxy"]').value;
+  // do something with the values
+  const accountData = {
+    username: username,
+    password: password,
+    proxy: proxy
+  };
+
+  // Do something with the account data object
+  console.log(accountData);
+
+  loadAccountData("accountData")
+}
+async function loadAllAccountsData(data) {
+  data.forEach((account) => loadAccountData(data))
+
+
 }

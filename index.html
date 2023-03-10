@@ -44,24 +44,52 @@
           </div>
           <a class="item"id="taskManagerButton">Add Task</a> <a class="item">Scrape Tools</a>
           <a class="item">Settings</a>
-
-     <div id="app" class="dropdown-container">
-  <div class="ui basic button" @click="toggleDropdown">
-    Add Account
-    <i class="dropdown icon"></i>
-  </div>
-  <div class="ui dropdown" :class="{ visible: isDropdownVisible }" 
-  style="direction: downward;">
-    <div class="item">Add Single Account</div>
-    <div class="item">Bulk Import From File</div>
-  </div>
-</div>
-
-
+ 
           
         </div>
+                 
+        <div class="ui simple dropdown item">
+          Add Accounts
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" id="add-single">Add Single Account</div>
+            <div class="item" id="add-bulk">Bulk Import</div>
+            <div class="item">Choice 3</div>
+          </div>
+        </div>
+
       </div>
     </div>
+    <div class="ui small modal" id="addAccountModal">
+      <div class="header">Add Account</div>
+      <div class="content">
+        <form class="ui form">
+          <div class="field">
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Enter username...">
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter password...">
+          </div>
+          <div class="field">
+            <label>Proxy</label>
+            <input type="text" name="proxy" placeholder="Enter proxy...">
+          </div>
+        </form>
+      </div>
+      <div class="actions">
+        <button class="ui button" id="cancelAddAccountButton">Cancel</button>
+        <button class="ui primary button" id="addAccountButton">Add Account</button>
+      </div>
+    </div>
+    
+
+<div id="app" class="dropdown-container">
+  <div class="ui basic button" id="add-single">
+    Add Account
+  </div>
+</div>
 
 
     <div class="ui small modal" id="taskManagerModal">
