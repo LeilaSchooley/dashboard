@@ -28,6 +28,7 @@
     <script src="taskManager.js" defer></script>
     <script src="tableHeader.js" defer></script>
     <script src="taskList.js" defer></script>
+    <script src="groupManager.js" defer></script>
 
     <script src="accounts.js" defer></script>
     <script src="main.js" defer></script>
@@ -46,6 +47,7 @@
           </div>
           <a class="item"id="taskManagerButton">Add Task</a> <a class="item">Scrape Tools</a>
           <a class="item">Settings</a>
+          <a class="item" id="addGroupButton">Add Group</a>
  
           
         </div>
@@ -110,6 +112,38 @@
       </div>
     </div>
     
+<!-- Add Group Modal -->
+<div class="ui modal" id="addGroupModal">
+  <i class="close icon"></i>
+  <div class="header">Add Group</div>
+  <div class="content">
+    <div class="ui form">
+      <div class="field">
+        <label>Group Name</label>
+        <input type="text" name="groupName" placeholder="Group Name">
+      </div>
+      <div class="field">
+        <label>Group Description</label>
+        <textarea name="groupDescription" placeholder="Group Description"></textarea>
+      </div>
+      <div class="field">
+        <label>Accounts</label>
+        <div class="ui selection fluid dropdown multiple">
+          <input type="hidden" name="accounts">
+          <i class="dropdown icon"></i>
+          <div class="default text">Select Accounts</div>
+          <div class="menu">
+            <!-- Accounts will be added dynamically here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui negative button" id="cancelAddGroup">Cancel</div>
+    <div class="ui positive button" id="addGroupBtn">Add Group</div>
+  </div>
+</div>
 
 <div id="app" class="dropdown-container">
   <div class="ui basic button" id="add-single">

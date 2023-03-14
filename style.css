@@ -130,3 +130,55 @@ body {
 }
 
 
+/* Add Group Modal */
+#addGroupModal {
+
+  display: none;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  overflow-y: auto;
+
+}
+
+
+.actions {
+
+  align-items: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+
+#addGroupModal .actions {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+
+#addGroupModal .header {
+  font-size: 1.5em;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+#addGroupModal .actions {
+  text-align: right;
+  margin-top: 20px;
+}
+
+#addGroupModal .field {
+  margin-bottom: 20px;
+}
+
+#addGroupModal .ui.form textarea {
+  height: 100px;
+}
+
+#addGroupModal .ui.dropdown.multiple {
+  min-height: 200px;
+}

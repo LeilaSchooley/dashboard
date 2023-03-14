@@ -1,4 +1,6 @@
-
+const addGroupModal = document.querySelector("#addGroupModal");
+const addGroupButton = document.querySelector("#addGroupButton");
+const addGroupBtn = document.querySelector("#addGroupBtn");
 
 const bulkImportButton = document.getElementById("add-bulk");
 const bulkImportModal = document.getElementById("bulkImportModal");
@@ -8,10 +10,19 @@ const clearInputButton = bulkImportModal.querySelector("#clearInputButton");
 const fileDisplay = bulkImportModal.querySelector("#fileDisplay");
 const bulkImportOkButton = bulkImportModal.querySelector("#bulkImportOkButton");
 
+
+const addSingleButton = document.getElementById("add-single");
+const addAccountModal = document.getElementById("addAccountModal");
+const cancelAddAccountButton = document.getElementById("cancelAddAccountButton");
+
 const tweetCheckbox = document.querySelector("input[name='tweeting']");
 const retweetCheckbox = document.querySelector("input[name='retweeting']");
 const likeCheckbox = document.querySelector("input[name='liking']");
 const mentionCheckbox = document.querySelector("input[name='mentioning']");
+
+
+
+
 const directMessageCheckbox = document.querySelector(
   "input[name='directMessaging']"
 );
@@ -28,7 +39,11 @@ const directMessageInput = document.querySelector(
 const followInput = document.querySelector("input[name='follows']");
 const unfollowInput = document.querySelector("input[name='unfollows']");
 
-const groupColumnNames = ["Group", "Settings", "Actions"];
+const groupColumnNames = ["Group Name", "Number of Accounts", "Description", "Actions"];
+
+
+
+
 const accountColumnNames = [
   "Group",
   "Username",
@@ -89,6 +104,9 @@ $(document).ready(async function () {
         removeTable();
 
         createTableHeader(groupColumnNames);
+        renderGroups();
+
+
       } else if (event.target.id === "tasks") {
         removeTable();
 
@@ -201,9 +219,6 @@ $(document).ready(async function () {
 
   });
 
-  const addSingleButton = document.getElementById("add-single");
-  const addAccountModal = document.getElementById("addAccountModal");
-  const cancelAddAccountButton = document.getElementById("cancelAddAccountButton");
 
   addSingleButton.addEventListener("click", () => {
     addAccountModal.classList.add("active");
@@ -274,6 +289,28 @@ $(document).ready(async function () {
     document.body.classList.remove("modal-open");
     bulkImportFileInput.value = "";
     fileDisplay.value = "";
+  });
+  
+
+  
+  addGroupButton.addEventListener("click", () => {
+    addGroupModal.style.display = 'block';
+    addGroupModal.classList.add("active");
+
+
+    document.body.classList.add("modal-open");
+  });
+
+  addGroupBtn.addEventListener("click", () => {
+
+    addGroup()
+    
+  })
+
+
+  $("#cancelAddGroupButton").click(function () {
+
+    
   });
   
 });
