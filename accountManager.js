@@ -120,7 +120,7 @@ function getAllAccounts(){
       return (JSON.stringify(data));
     });
   } catch (e) {
-    console.log("Error: " + e.message);
+    alert("Error: " + e.message);
   }
   
   
