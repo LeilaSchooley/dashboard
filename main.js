@@ -1,4 +1,9 @@
-const addGroupModal = document.querySelector("#addGroupModal");
+
+
+$(document).ready(async function () {
+
+
+  const addGroupModal = document.querySelector("#addGroupModal");
 const addGroupButton = document.querySelector("#addGroupButton");
 const addGroupBtn = document.querySelector("#addGroupBtn");
 
@@ -63,9 +68,12 @@ const accountColumnNames = [
 const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
 
 
-$(document).ready(async function () {
   // await addTableHeader();
   createTableHeader(accountColumnNames);
+  let accounts = getAllAccounts()
+
+
+  loadAllAccountsData(accounts)
 
   // Code to be executed after the DOM has loaded
   $(".ui.toggle.button").click(function () {

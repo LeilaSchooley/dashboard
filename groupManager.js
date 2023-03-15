@@ -75,7 +75,6 @@ function renderGroups() {
 }
 
 // Call fetchGroups to populate the group list and render the groups on the page
-fetchGroups();
 
 
 async function fetchAccounts() {

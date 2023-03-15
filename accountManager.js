@@ -84,7 +84,7 @@ Api.DatabaseInsert([], accountData, accountsTableId)
 
 
 async function loadAllAccountsData(data) {
-  data.forEach((account) => loadAccountData(data))
+  data.forEach((account) => loadAccountData(account))
 
 
 }
