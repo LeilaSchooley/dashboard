@@ -72,7 +72,7 @@ const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
   createTableHeader(accountColumnNames);
   let accounts = getAllAccounts()
 
-
+  console.log(accounts)
   loadAllAccountsData(accounts)
 
   // Code to be executed after the DOM has loaded
