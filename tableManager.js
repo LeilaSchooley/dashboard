@@ -20,3 +20,21 @@
   return table;
 }
 
+
+function updateTableRowCount() {
+  const tbody = document.querySelector("tbody");
+  const rowCount = tbody.querySelectorAll("tr").length;
+
+  $("h1").text(`Accounts: ${rowCount}`);
+}
+
+function removeTable() {
+  const tableBody = document.querySelector("tbody");
+  const tableHeader = document.querySelector("thead");
+  if (tableBody) {
+    tableBody.innerHTML = "";
+  }
+  if (tableHeader) {
+    tableHeader.innerHTML = "";
+  }
+}

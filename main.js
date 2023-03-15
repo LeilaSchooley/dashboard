@@ -4,6 +4,8 @@ const addGroupBtn = document.querySelector("#addGroupBtn");
 
 const bulkImportButton = document.getElementById("add-bulk");
 const bulkImportModal = document.getElementById("bulkImportModal");
+
+
 const bulkImportFileInput = bulkImportModal.querySelector('input[name="bulkImportFile"]');
 const readFileButton = bulkImportModal.querySelector("#readFileButton");
 const clearInputButton = bulkImportModal.querySelector("#clearInputButton");
@@ -60,23 +62,6 @@ const accountColumnNames = [
 
 const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
 
-function updateTableRowCount() {
-  const tbody = document.querySelector("tbody");
-  const rowCount = tbody.querySelectorAll("tr").length;
-
-  $("h1").text(`Accounts: ${rowCount}`);
-}
-
-function removeTable() {
-  const tableBody = document.querySelector("tbody");
-  const tableHeader = document.querySelector("thead");
-  if (tableBody) {
-    tableBody.innerHTML = "";
-  }
-  if (tableHeader) {
-    tableHeader.innerHTML = "";
-  }
-}
 
 $(document).ready(async function () {
   // await addTableHeader();
