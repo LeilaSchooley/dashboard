@@ -1,79 +1,78 @@
-
-
-$(document).ready(async function () {
-
-
+$(document).ready(function () {
   const addGroupModal = document.querySelector("#addGroupModal");
-const addGroupButton = document.querySelector("#addGroupButton");
-const addGroupBtn = document.querySelector("#addGroupBtn");
+  const addGroupButton = document.querySelector("#addGroupButton");
+  const addGroupBtn = document.querySelector("#addGroupBtn");
 
-const bulkImportButton = document.getElementById("add-bulk");
-const bulkImportModal = document.getElementById("bulkImportModal");
+  const bulkImportButton = document.getElementById("add-bulk");
+  const bulkImportModal = document.getElementById("bulkImportModal");
 
+  const bulkImportFileInput = bulkImportModal.querySelector(
+    'input[name="bulkImportFile"]'
+  );
+  const readFileButton = bulkImportModal.querySelector("#readFileButton");
+  const clearInputButton = bulkImportModal.querySelector("#clearInputButton");
+  const fileDisplay = bulkImportModal.querySelector("#fileDisplay");
+  const bulkImportOkButton = bulkImportModal.querySelector(
+    "#bulkImportOkButton"
+  );
 
-const bulkImportFileInput = bulkImportModal.querySelector('input[name="bulkImportFile"]');
-const readFileButton = bulkImportModal.querySelector("#readFileButton");
-const clearInputButton = bulkImportModal.querySelector("#clearInputButton");
-const fileDisplay = bulkImportModal.querySelector("#fileDisplay");
-const bulkImportOkButton = bulkImportModal.querySelector("#bulkImportOkButton");
+  const addSingleButton = document.getElementById("add-single");
+  const addAccountModal = document.getElementById("addAccountModal");
+  const cancelAddAccountButton = document.getElementById(
+    "cancelAddAccountButton"
+  );
 
+  const tweetCheckbox = document.querySelector("input[name='tweeting']");
+  const retweetCheckbox = document.querySelector("input[name='retweeting']");
+  const likeCheckbox = document.querySelector("input[name='liking']");
+  const mentionCheckbox = document.querySelector("input[name='mentioning']");
 
-const addSingleButton = document.getElementById("add-single");
-const addAccountModal = document.getElementById("addAccountModal");
-const cancelAddAccountButton = document.getElementById("cancelAddAccountButton");
+  const directMessageCheckbox = document.querySelector(
+    "input[name='directMessaging']"
+  );
+  const followCheckbox = document.querySelector("input[name='following']");
+  const unfollowCheckbox = document.querySelector("input[name='unfollowing']");
 
-const tweetCheckbox = document.querySelector("input[name='tweeting']");
-const retweetCheckbox = document.querySelector("input[name='retweeting']");
-const likeCheckbox = document.querySelector("input[name='liking']");
-const mentionCheckbox = document.querySelector("input[name='mentioning']");
+  const tweetInput = document.querySelector("input[name='tweeting']");
+  const retweetInput = document.querySelector("input[name='retweets']");
+  const likeInput = document.querySelector("input[name='likes']");
+  const mentionInput = document.querySelector("input[name='mentions']");
+  const directMessageInput = document.querySelector(
+    "input[name='directMessages']"
+  );
+  const followInput = document.querySelector("input[name='follows']");
+  const unfollowInput = document.querySelector("input[name='unfollows']");
 
+  const groupColumnNames = [
+    "Group Name",
+    "Number of Accounts",
+    "Description",
+    "Actions",
+  ];
 
+  const accountColumnNames = [
+    "Group",
+    "Username",
+    "Proxy",
+    "Posts",
+    "Following",
+    "Followers",
+    "Status",
+    "Settings",
+    "Actions",
+  ];
 
+  const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
 
-const directMessageCheckbox = document.querySelector(
-  "input[name='directMessaging']"
-);
-const followCheckbox = document.querySelector("input[name='following']");
-const unfollowCheckbox = document.querySelector("input[name='unfollowing']");
-
-const tweetInput = document.querySelector("input[name='tweeting']");
-const retweetInput = document.querySelector("input[name='retweets']");
-const likeInput = document.querySelector("input[name='likes']");
-const mentionInput = document.querySelector("input[name='mentions']");
-const directMessageInput = document.querySelector(
-  "input[name='directMessages']"
-);
-const followInput = document.querySelector("input[name='follows']");
-const unfollowInput = document.querySelector("input[name='unfollows']");
-
-const groupColumnNames = ["Group Name", "Number of Accounts", "Description", "Actions"];
-
-
-
-
-const accountColumnNames = [
-  "Group",
-  "Username",
-  "Proxy",
-  "Posts",
-  "Following",
-  "Followers",
-  "Status",
-  "Settings",
-  "Actions",
-];
-
-
-
-const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
-
-
-  // await addTableHeader();
   createTableHeader(accountColumnNames);
-  let accounts = getAllAccounts()
 
-  console.log(accounts)
-  loadAllAccountsData(accounts)
+  getAllAccounts()
+    .then(function (accounts) {
+      loadAllAccountsDatas(accounts);
+    })
+    .catch(function (error) {
+      alert(error);
+    });
 
   // Code to be executed after the DOM has loaded
   $(".ui.toggle.button").click(function () {
@@ -98,21 +97,15 @@ const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
 
         createTableHeader(groupColumnNames);
         renderGroups();
-
-
       } else if (event.target.id === "tasks") {
         removeTable();
 
         createTableHeader(taskColumnNames);
 
-
-        renderAllTaskTables(tasks) 
+        renderAllTaskTables(tasks);
       }
     });
   });
-
-
-
 
   tweetCheckbox.addEventListener("change", (event) => {
     if (event.target.checked) {
@@ -171,26 +164,23 @@ const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
     }
   });
 
-
-    
   // Get all the edit buttons and add event listeners to trigger the editTask function
-  const editButtons = document.querySelectorAll('.edit-button');
-  editButtons.forEach(button => {
-    button.addEventListener('click', () => {
+  const editButtons = document.querySelectorAll(".edit-button");
+  editButtons.forEach((button) => {
+    button.addEventListener("click", () => {
       const taskId = button.dataset.id;
       editTask(taskId);
     });
   });
 
   // Get all the delete buttons and add event listeners to trigger the deleteTask function
-  const deleteButtons = document.querySelectorAll('.delete-button');
-  deleteButtons.forEach(button => {
-    button.addEventListener('click', () => {
+  const deleteButtons = document.querySelectorAll(".delete-button");
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", () => {
       const taskId = button.dataset.id;
       deleteTask(taskId);
     });
   });
-
 
   updateTableRowCount();
 
@@ -208,10 +198,8 @@ const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
     removeTable();
     createTableHeader(taskColumnNames);
 
-    renderAllTaskTables(tasks) 
-
+    renderAllTaskTables(tasks);
   });
-
 
   addSingleButton.addEventListener("click", () => {
     addAccountModal.classList.add("active");
@@ -227,17 +215,14 @@ const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
     }
   });
 
-
   $("#addAccountButton").click(function () {
     saveAccountData();
-
-    
   });
   bulkImportButton.addEventListener("click", () => {
     bulkImportModal.classList.add("active");
     document.body.classList.add("modal-open");
   });
-  
+
   bulkImportModal.addEventListener("click", (event) => {
     if (event.target === bulkImportModal) {
       bulkImportModal.classList.remove("active");
@@ -246,11 +231,11 @@ const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
       fileDisplay.value = "";
     }
   });
-  
+
   clearInputButton.addEventListener("click", () => {
     fileDisplay.value = "";
   });
-  
+
   readFileButton.addEventListener("click", () => {
     const file = bulkImportFileInput.files[0];
     const reader = new FileReader();
@@ -260,7 +245,7 @@ const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
     };
     reader.readAsText(file);
   });
-  
+
   bulkImportOkButton.addEventListener("click", () => {
     // Read file line by line and add to a list
     const file = bulkImportFileInput.files[0];
@@ -277,33 +262,23 @@ const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
       console.log(list);
     };
     reader.readAsText(file);
-    
+
     bulkImportModal.classList.remove("active");
     document.body.classList.remove("modal-open");
     bulkImportFileInput.value = "";
     fileDisplay.value = "";
   });
-  
 
-  
   addGroupButton.addEventListener("click", () => {
-    addGroupModal.style.display = 'block';
+    addGroupModal.style.display = "block";
     addGroupModal.classList.add("active");
-
 
     document.body.classList.add("modal-open");
   });
 
   addGroupBtn.addEventListener("click", () => {
-
-    addGroup()
-    
-  })
-
-
-  $("#cancelAddGroupButton").click(function () {
-
-    
+    addGroup();
   });
-  
+
+  $("#cancelAddGroupButton").click(function () {});
 });
