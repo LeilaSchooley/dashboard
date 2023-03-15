@@ -1,3 +1,43 @@
+function getAllAccounts() {
+  return new Promise((resolve, reject) => {
+    try {
+      // Get the table id of the Accounts table
+      var tableId = Api.GetDatabaseStructure().find(function (table) {
+        return table.name === "Accounts";
+      }).id;
+
+      // Get the columns for the Accounts table
+      var columns = Api.GetDatabaseStructure().find(function (table) {
+        return table.name === "Accounts";
+      }).columns;
+
+      // Create an array to hold the data
+      var data = [];
+
+      // Loop through each record in the table
+      Api.DatabaseSelect({}, tableId).then(function (records) {
+        records.forEach(function (record) {
+          // Create an object to hold the record data
+          var obj = {};
+
+          // Loop through each column and get the value for the current record
+          columns.forEach(function (column) {
+            obj[column.name] = record.data[column.id];
+          });
+
+          // Add the object to the data array
+          data.push(obj);
+        });
+
+        // Resolve the Promise with the data array
+        resolve(JSON.stringify(data));
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 function loadAccountData(accountData) {
   const tbody = document.querySelector("tbody");
   const row = document.createElement("tr");
@@ -35,7 +75,7 @@ function loadAccountData(accountData) {
   row.appendChild(settingsColumn);
   const actionsColumn = document.createElement("td");
   actionsColumn.textContent = "Actions";
-  row.appendChild(actionsColumn);;`
+  row.appendChild(actionsColumn);;`;
 
   tbody.appendChild(row);
   return row;
@@ -86,42 +126,6 @@ function loadAllAccountsData(data) {
     loadAccountData(data[i]);
   }
 }
-function getAllAccounts() {
-  return new Promise((resolve, reject) => {
-    try {
-      // Get the table id of the Accounts table
-      var tableId = Api.GetDatabaseStructure().find(function(table) { return table.name === "Accounts"; }).id;
-
-      // Get the columns for the Accounts table
-      var columns = Api.GetDatabaseStructure().find(function(table) { return table.name === "Accounts"; }).columns;
-
-      // Create an array to hold the data
-      var data = [];
-
-      // Loop through each record in the table
-      Api.DatabaseSelect({}, tableId).then(function(records) {
-        records.forEach(function(record) {
-          // Create an object to hold the record data
-          var obj = {};
-
-          // Loop through each column and get the value for the current record
-          columns.forEach(function(column) {
-            obj[column.name] = record.data[column.id];
-          });
-
-          // Add the object to the data array
-          data.push(obj);
-        });
-
-        // Resolve the Promise with the data array
-        resolve(JSON.stringify(data));
-      });
-    } catch (e) {
-      reject(e);
-    }
-  });
-}
-
 
 try {
   const accounts = [
