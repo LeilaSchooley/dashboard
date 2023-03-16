@@ -127,74 +127,9 @@ function loadAllAccountsData(data) {
   }
 }
 
-try {
-  const accounts = [
-    {
-      Group: "test",
-      Username: "Debonky29496665",
-      Password: "LJsYktcJeCRpxj5",
-      Proxy: "",
-      "Recovery Email": "",
-      "Recovery Pass": "",
-      Phone: "",
-      Cookies:
-        "eyJjb29NGY2ODA2NDgyNmEyZjAxYzI1OTU2NDliNWZlNzk0YyJ9LHsiZG9t3aXR0ZXIuY29tIiFjRDQifV19",
-      "Number Of Posts": "44",
-      Fingerprint: "",
-      "Number of Following": "3",
-      "Number of Followers": "2",
-      Status: "Completed",
-    },
-    {
-      Group: "ttt",
-      Username: "ttt",
-      Password: "ttt",
-      Proxy: "ttt",
-      "Recovery Email": "ttt",
-      "Recovery Pass": "tttttt",
-      Phone: "tttttt",
-      Cookies: "ttt",
-      "Number Of Posts": "tttttt",
-      Fingerprint: "ttt",
-      "Number of Following": "ttt",
-      "Number of Followers": "ttt",
-      Status: "ttt",
-    },
-  ];
-
-  accounts.forEach((account) => {
-    const {
-      Group,
-      Username,
-      Password,
-      Proxy,
-      "Recovery Email": recoveryEmail,
-      "Recovery Pass": recoveryPass,
-      Phone,
-      Cookies,
-      "Number Of Posts": numOfPosts,
-      Fingerprint,
-      "Number of Following": numOfFollowing,
-      "Number of Followers": numOfFollowers,
-      Status,
-    } = account;
-
-    console.log(`Group: ${Group}`);
-    console.log(`Username: ${Username}`);
-    console.log(`Password: ${Password}`);
-    console.log(`Proxy: ${Proxy}`);
-    console.log(`Recovery Email: ${recoveryEmail}`);
-    console.log(`Recovery Pass: ${recoveryPass}`);
-    console.log(`Phone: ${Phone}`);
-    console.log(`Cookies: ${Cookies}`);
-    console.log(`Number Of Posts: ${numOfPosts}`);
-    console.log(`Fingerprint: ${Fingerprint}`);
-    console.log(`Number of Following: ${numOfFollowing}`);
-    console.log(`Number of Followers: ${numOfFollowers}`);
-    console.log(`Status: ${Status}`);
-
-    console.log("---");
-  });
-} catch (error) {
-  alert(`Error parsing accounts: ${error}`);
-}
+export {
+  loadAllAccountsData,
+  saveAccountData,
+  getAllAccounts,
+  loadAccountData,
+};
