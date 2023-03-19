@@ -1,9 +1,3 @@
-import {
-  loadAllAccountsData,
-  saveAccountData,
-  getAllAccounts,
-  loadAccountData,
-} from "./accountManager";
 
 $(document).ready(function () {
   
@@ -77,59 +71,45 @@ $(document).ready(function () {
 
   createTableHeader(accountColumnNames);
 
-
-  function getAllAccounts() {
-    return new Promise((resolve, reject) => {
-      try {
-        // Get the table id of the Accounts table
-        var tableId = Api.GetDatabaseStructure().find(function (table) {
-          return table.name === "Accounts";
-        }).id;
+try {
+  // Get the table id of the Accounts table
+  var tableId = Api.GetDatabaseStructure().find(function(table) { return table.name === "Accounts"; }).id;
   
-        // Get the columns for the Accounts table
-        var columns = Api.GetDatabaseStructure().find(function (table) {
-          return table.name === "Accounts";
-        }).columns;
+  // Get the columns for the Accounts table
+  var columns = Api.GetDatabaseStructure().find(function(table) { return table.name === "Accounts"; }).columns;
   
-        // Create an array to hold the data
-        var data = [];
+  // Create an array to hold the data
+  var data = [];
   
-        // Loop through each record in the table
-        Api.DatabaseSelect({}, tableId).then(function (records) {
-          records.forEach(function (record) {
-            // Create an object to hold the record data
-            var obj = {};
-  
-            // Loop through each column and get the value for the current record
-            columns.forEach(function (column) {
-              obj[column.name] = record.data[column.id];
-            });
-  
-            // Add the object to the data array
-            data.push(obj);
-          });
-  
-          // Resolve the Promise with the data array
-          resolve(JSON.stringify(data));
-        });
-      } catch (e) {
-        reject(e);
-      }
+  // Loop through each record in the table
+  Api.DatabaseSelect({}, tableId).then(function(records) {
+    records.forEach(function(record) {
+      // Create an object to hold the record data
+      var obj = {};
+      
+      // Loop through each column and get the value for the current record
+      columns.forEach(function(column) {
+        obj[column.name] = record.data[column.id];
+      });
+      
+      // Add the object to the data array
+      data.push(obj);
     });
-  }
+    
+    // Print the data array to the log
+    console.log(data);
+  });
+} catch (e) {
+  console.log("Error: " + e.message);
+}
 
-  getAllAccounts()
-    .then(function (accounts) {
-      loadAllAccountsData(accounts);
-    })
-    .catch(function (error) {
-      alert(error);
-    });
+
 
   // Code to be executed after the DOM has loaded
   $(".ui.toggle.button").click(function () {
     $(".mobile.only.grid .ui.vertical.menu").toggle(100);
   });
+
 
   const menuItems = document.querySelectorAll(".ui.vertical.menu .item");
 
@@ -144,6 +124,7 @@ $(document).ready(function () {
         removeTable();
 
         createTableHeader(accountColumnNames);
+        
       } else if (event.target.textContent === "Groups") {
         removeTable();
 

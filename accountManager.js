@@ -3,11 +3,11 @@ function loadAccountData(accountData) {
   const row = document.createElement("tr");
 
   const groupColumn = document.createElement("td");
-  groupColumn.textContent = "Group";
+  groupColumn.textContent = accountData["Group"];
   row.appendChild(groupColumn);
 
   const usernameColumn = document.createElement("td");
-  usernameColumn.textContent = accountData.username;
+  usernameColumn.textContent = accountData["Username"];
   row.appendChild(usernameColumn);
 
   const proxyColumn = document.createElement("td");
@@ -15,15 +15,15 @@ function loadAccountData(accountData) {
   row.appendChild(proxyColumn);
 
   const postsColumn = document.createElement("td");
-  postsColumn.textContent = "100";
+  postsColumn.textContent = accountData["Number Of Posts"];
   row.appendChild(postsColumn);
 
   const followingColumn = document.createElement("td");
-  followingColumn.textContent = "200";
+  followingColumn.textContent = accountData["Number of Following"];
   row.appendChild(followingColumn);
 
   const followersColumn = document.createElement("td");
-  followersColumn.textContent = "300";
+  followersColumn.textContent = accountData["Number of Followers"];
   row.appendChild(followersColumn);
 
   const statusColumn = document.createElement("td");
@@ -83,13 +83,7 @@ function saveAccountData() {
 
 function loadAllAccountsData(data) {
   for (var i = 0; i < data.length; i++) {
+    console.log("loading data");
     loadAccountData(data[i]);
   }
 }
-
-export {
-  loadAllAccountsData,
-  saveAccountData,
-  getAllAccounts,
-  loadAccountData,
-};
