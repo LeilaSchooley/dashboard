@@ -272,8 +272,20 @@ $(document).ready(function () {
       $('#tweetModal').modal('show');
   });
 
+  $('.ui.cancel.button').on('click', function() {
+    $('#taskManagerModal').modal('hide');
+  });
+
+  $('.ui.positive.button').on('click', function() {
+    $('#taskManagerModal').modal('hide');
+  });
 
 
+
+  const addGroupButton = document.getElementById("addGroupButton");
+  const addGroupModal = document.getElementById("addGroupModal");
+
+  
 
 
 
