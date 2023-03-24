@@ -57,7 +57,7 @@
           <i class="dropdown icon"></i>
           <div class="menu">
             <div class="item" id="add-single">Add Single Account</div>
-            <div class="item" id="add-bulk">Bulk Import</div>
+            <div class="item" id="bulkImportButton">Bulk Import</div>
             <div class="item">Choice 3</div>
           </div>
         </div>
@@ -87,31 +87,31 @@
         <button class="ui primary button" id="addAccountButton">Add Account</button>
       </div>
     </div>
-    
-    <div class="ui small modal" id="bulkImportModal">
-      <div class="header">Bulk Import Accounts</div>
-      <div class="content">
-        <form class="ui form">
-          <div class="field">
-            <label>Choose a file</label>
-            <input type="file" name="bulkImportFile" accept=".csv, .txt">
-          </div>
-          <div class="field">
-            <textarea id="fileDisplay" rows="10" placeholder="File contents will appear here" readonly></textarea>
-          </div>
-        </form>
+<!-- Bulk Import Modal -->
+<div class="ui small modal" id="bulkImportModal">
+  <div class="header">Bulk Import Accounts</div>
+  <div class="content">
+    <form class="ui form">
+      <div class="field">
+        <label>Select a file</label>
+        <input type="file" name="bulkImportFileInput" id="bulkImportFileInput" accept=".csv, .txt">
+
       </div>
-      <div class="actions">
-        <button class="ui button" id="readFileButton">Read File</button>
-        <button class="ui button" id="clearInputButton">Clear Input</button>
-        <div class="ui buttons">
-          <button class="ui cancel button">Cancel</button>
-          <div class="or"></div>
-          <button class="ui positive button" id="bulkImportOkButton">OK</button>
-        </div>
+      <div class="field">
+        <textarea id="fileDisplay" rows="10" placeholder="File contents will appear here" readonly></textarea>
       </div>
+    </form>
+  </div>
+  <div class="actions">
+    <button class="ui button" id="readFileButton">Read File</button>
+    <button class="ui button" id="clearInputButton">Clear Input</button>
+    <div class="ui buttons">
+      <div class="ui cancel button" id="bulkImportCancelButton">Cancel</div>
+      <div class="ui positive button" id="bulkImportOkButton">OK</div>
     </div>
-    
+  </div>
+</div>
+
 <!-- Add Group Modal -->
 <div class="ui modal" id="addGroupModal">
   <i class="close icon"></i>
@@ -152,65 +152,7 @@
 </div>
 
 
-    <div class="ui small modal" id="taskManagerModal">
-      <div class="header">Task Manager</div>
-      <div class="content">
-        <form class="ui form">
-          <div class="field">
-            <label>Task Name</label>
-            <input type="text" name="taskName" placeholder="Enter task name...">
-          </div>
-          <div class="field">
-            <label>Choose Twitter User Options</label>
-            <div class="ui checkbox">
-              <input type="checkbox" name="tweeting">
-              <label>Tweeting</label>
-              <input type="text" name="tweetingInput" placeholder="Enter tweet link...">
-            </div>
-            <div class="ui checkbox">
-              <input type="checkbox" name="retweeting">
-              <label>Retweeting</label>
-              <input type="text" name="retweetingInput" placeholder="Enter retweet text...">
-            </div>
-            <div class="ui checkbox">
-              <input type="checkbox" name="liking">
-              <label>Liking</label>
-              <input type="text" name="likingInput" placeholder="Enter liking text...">
-            </div>
-            <div class="ui checkbox">
-              <input type="checkbox" name="mentioning">
-              <label>Mentioning</label>
-            </div>
-            <div class="ui checkbox">
-              <input type="checkbox" name="directMessaging">
-              <label>Direct Messaging</label>
-              <input type="text" name="directMessagingInput" placeholder="Enter direct messaging text...">
-            </div>
-            <div class="ui checkbox">
-              <input type="checkbox" name="following">
-              <label>Following</label>
-              <div class="field following-input hidden">
-                <label>Choose a file</label>
-                <input type="file" name="followingFile">
-              </div>
-            </div>
-            
-            <div class="ui checkbox">
-              <input type="checkbox" name="unfollowing">
-              <label>Unfollowing</label>
-            </div>
-          </div>
-          <div class="field">
-            <label>Follow Lists</label>
-            <input type="text" name="followLists" placeholder="Enter follow lists...">
-          </div>
-        </form>
-      </div>
-      <div class="actions">
-        <button class="ui button" id="cancelTaskButton">Cancel</button>
-        <button class="ui primary button" id="addTaskButton">Add Task</button>
-      </div>
-    </div>
+  
     
 
     <div class="ui mobile only padded grid">
@@ -267,6 +209,130 @@
         </div>
       </div>
     </div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <style>
+    #tweetModal textarea {
+      height: 150px;
+      resize: vertical;
+    }
+  </style>
+</head>
+<body>
+<!-- Task Manager Modal -->
+<div class="ui modal" id="taskManagerModal">
+  <i class="close icon"></i>
+  <div class="header">
+    Task Manager
+  </div>
+  <div class="content">
+    <div class="ui grid">
+      <!-- Sidebar -->
+      <div class="four wide column">
+        <div class="ui vertical menu">
+          <div class="item">
+            <div class="header">
+              Twitter Tasks
+            </div>
+            <div class="menu">
+              <a class="item active" data-tab="tweet-tab">Tweet</a>
+              <a class="item" data-tab="retweet-tab">Retweet</a>
+              <a class="item" data-tab="follow-tab">Follow</a>
+              <a class="item" data-tab="like-tab">Like</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Tab Content -->
+      <div class="twelve wide stretched column">
+        <div class="ui tab active" data-tab="tweet-tab">
+          <!-- Tweet Content -->
+          <div class="content">
+            <form class="ui form">
+              <div class="field">
+                <label>Upload tweets file</label>
+                <input type="file" name="tweetsFile" accept=".txt, .csv">
+              </div>
+              <div class="field">
+                <label>Hashtags or mentions (comma-separated)</label>
+                <textarea name="hashtagsOrMentions"></textarea>
+              </div>
+              <div class="field">
+                <label>Schedule tweet</label>
+                <div class="ui calendar" id="tweetCalendar">
+                  <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" placeholder="Date/Time">
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label>Frequency</label>
+                <div class="ui selection dropdown">
+                  <input type="hidden" name="frequency">
+                  <i class="dropdown icon"></i>
+                  <div class="default text">Select frequency</div>
+                  <div class="menu">
+                    <div class="item" data-value="once">Once</div>
+                    <div class="item" data-value="daily">Daily</div>
+                    <div class="item" data-value="weekly">Weekly</div>
+                    <!-- Add more options if desired -->
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label>Number of times to run</label>
+                <input type="number" name="numRuns" min="1" max="100" step="1" value="1">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="ui tab" data-tab="retweet-tab">
+          <!-- Retweet Content -->
+          <div class="content">
+            <form class="ui form">
+              <div class="field">
+                <label>Upload retweets file</label>
+                <input type="file" name="retweetsFile" accept=".txt, .csv">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="ui tab" data-tab="follow-tab">
+          <!-- Follow Content -->
+          <div class="content">
+            <form class="ui form">
+              <div class="field">
+                <label>Upload follows file</label>
+                <input type="file" name="followsFile" accept=".txt, .csv">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="ui tab" data-tab="like-tab">
+          <!-- Like Content -->
+          <div class="content">
+            <form class="ui form">
+              <div class="field">
+                <label>Upload likes file</label>
+                <input type="file" name="likesFile" accept=".txt, .csv">
+              </div>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui cancel button">Cancel
+
+    </div>
+  </div>
+</div>
+
 
   </body>
 </html>
