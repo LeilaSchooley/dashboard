@@ -1,30 +1,24 @@
-const groupColumnNames = [
-  "Group Name",
-  "Number of Accounts",
-  "Description",
-  "Actions",
-];
-
-const accountColumnNames = [
-  "Group",
-  "Username",
-  "Proxy",
-  "Posts",
-  "Following",
-  "Followers",
-  "Status",
-  "Settings",
-  "Actions",
-];
-
-const taskColumnNames = ["Group", "Account", "Task", "Status", "Actions"];
+const columnNames = {
+  group: ["Group Name", "Number of Accounts", "Description", "Actions"],
+  account: [
+    "Group",
+    "Username",
+    "Proxy",
+    "Posts",
+    "Following",
+    "Followers",
+    "Status",
+    "Settings",
+    "Actions",
+  ],
+  task: ["Group", "Account", "Task", "Status", "Actions"],
+};
 
 $(document).ready(function () {
   console.log("Creating tables");
 
   // Example usage for creating table headers for groups, accounts, and tasks:
-  createTableHeader(accountColumnNames);
-
+  createTableHeader(columnNames.account);
   // Code to be executed after the DOM has loaded
   $(".ui.toggle.button").click(function () {
     $(".mobile.only.grid .ui.vertical.menu").toggle(100);
@@ -102,7 +96,7 @@ $(document).ready(function () {
       var columns = Api.GetDatabaseStructure().find(function (table) {
         return table.name === "Accounts";
       }).columns;
-      columns.forEach((column) => console.log(column.name));
+
       // Create an array to hold the data
       var data = [];
 
@@ -260,33 +254,84 @@ $(document).ready(function () {
     bulkImportFileInput.value = "";
     fileDisplay.value = "";
   });
-
   const taskManagerButton = document.getElementById("taskManagerButton");
   const taskManagerModal = document.getElementById("taskManagerModal");
-
+  const cancelBtn = document.querySelector('.ui.cancel.button');
+  const positiveBtn = document.querySelector('.ui.positive.button');
+  
   taskManagerButton.addEventListener("click", () => {
-    taskManagerModal.classList.add("active");
-    document.body.classList.add("modal-open");
-
-
-      $('#tweetModal').modal('show');
+    taskManagerModal.classList.toggle("active");
+    document.body.classList.toggle("modal-open");
+  
+    $('#tweetModal').modal('show');
   });
-
-  $('.ui.cancel.button').on('click', function() {
-    $('#taskManagerModal').modal('hide');
+  
+  cancelBtn.addEventListener('click', function() {
+    taskManagerModal.classList.toggle('active');
+    document.body.classList.toggle("modal-open");
   });
+  
+  positiveBtn.addEventListener('click', function() {
+    taskManagerModal.classList.remove('active');
+    document.body.classList.remove("modal-open");
+    console.log("yes")
 
-  $('.ui.positive.button').on('click', function() {
-    $('#taskManagerModal').modal('hide');
   });
-
-
+  
+  const accounts = [
+    { id: 1, username: "user1" },
+    { id: 2, username: "user2" },
+    { id: 3, username: "user3" },
+  ];
+  
 
   const addGroupButton = document.getElementById("addGroupButton");
   const addGroupModal = document.getElementById("addGroupModal");
+  const addGroupBtn = document.getElementById("addGroupBtn");
 
+  addGroupBtn.addEventListener("click", ()=> {
+    console.log("yes")
+    groupInfo = new Group()
+  }
+  )
+  addGroupButton.addEventListener("click", () => {
+    addGroupModal.classList.toggle("active");
+    document.body.classList.toggle("modal-open");
   
+    $('#addGroupModal').modal('show');
+  });
 
+function loadAccounts(accounts) {
+  const dropdown = document.querySelector(".ui.dropdown.multiple");
+  const menu = dropdown.querySelector(".menu");
+  const accountsInput = dropdown.querySelector('input[name="accounts"]');
 
+  // Clear the dropdown
+  menu.innerHTML = "";
+
+  // Loop through the accounts and add them to the dropdown
+  accounts.forEach((account) => {
+    const item = document.createElement("div");
+    item.classList.add("item");
+    item.dataset.value = account.id;
+    item.innerHTML = account.username;
+
+    // Add click event to select or deselect account
+    item.addEventListener("click", () => {
+      item.classList.toggle("selected");
+      const selectedItems = menu.querySelectorAll(".selected");
+      const selectedAccountIds = Array.from(selectedItems).map(
+        (item) => item.dataset.value
+      );
+      accountsInput.value = selectedAccountIds.join(",");
+    });
+
+    menu.appendChild(item);
+  });
+
+  // Initialize the dropdown
+  $(dropdown).dropdown("restore defaults");
+}
+loadAccounts(accounts)
 
 });
