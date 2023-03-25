@@ -1,13 +1,7 @@
 function insertGroupRow(data) {
   // Get the table id of the Accounts table
-  var tableId = Api.GetDatabaseStructure().find(function (table) {
-    return table.name == "groups";
-  }).id;
+  let  tableId, columns = getTableInfo("groups")
 
-  // Get the columns for the Accounts table
-  var columns = Api.GetDatabaseStructure().find(function (table) {
-    return table.name == "groups";
-  }).columns;
 
   // Create an object to hold the data for the new row
   var row = {};

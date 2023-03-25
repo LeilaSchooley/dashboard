@@ -37,14 +37,14 @@ $(document).ready(function () {
       if (event.target.textContent === "Accounts") {
         removeTable();
 
-        createTableHeader(accountColumnNames);
+        createTableHeader(columnNames.account);
 
       } else if (event.target.textContent === "Groups") {
         removeTable();
-    renderGroups(groupList)
 
         createTableHeader(columnNames.group);
         let groupList = fetchGroups()
+        console.log(groupList)
         renderGroups(groupList)
 
 
@@ -53,7 +53,7 @@ $(document).ready(function () {
 
         createTableHeader(taskColumnNames);
 
-        renderAllTaskTables(tasks);
+        renderAllTaskTables(columnNames.task);
       }
     });
   });
@@ -125,17 +125,25 @@ $(document).ready(function () {
       });
   }
 
+
+  function getTableInfo(tableName) {
+    // Get the table id
+    var tableId = Api.GetDatabaseStructure().find(function (table) {
+      return table.name === tableName;
+    }).id;
+  
+    // Get the columns
+    var columns = Api.GetDatabaseStructure().find(function (table) {
+      return table.name === tableName;
+    }).columns;
+  
+    return { tableId, columns };
+  }
+
   function getAllAccounts() {
     try {
       // Get the table id of the Accounts table
-      var tableId = Api.GetDatabaseStructure().find(function (table) {
-        return table.name === "Accounts";
-      }).id;
-
-      // Get the columns for the Accounts table
-      var columns = Api.GetDatabaseStructure().find(function (table) {
-        return table.name === "Accounts";
-      }).columns;
+      let  tableId, columns = getTableInfo("accounts")
 
       // Create an array to hold the data
       var data = [];
