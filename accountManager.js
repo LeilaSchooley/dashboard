@@ -1,45 +1,20 @@
 function loadAccountData(accountData) {
   const tbody = document.querySelector("tbody");
   const row = document.createElement("tr");
+  
+  row.appendChild(document.createElement("td")).textContent = accountData["group"];
+  row.appendChild(document.createElement("td")).textContent = accountData["username"];
+  row.appendChild(document.createElement("td")).textContent = accountData.proxy;
+  row.appendChild(document.createElement("td")).textContent = accountData["posts"];
+  row.appendChild(document.createElement("td")).textContent = accountData["following"];
+  row.appendChild(document.createElement("td")).textContent = accountData["followers"];
+  row.appendChild(document.createElement("td")).textContent = accountData["status"];
 
-  const groupColumn = document.createElement("td");
-  groupColumn.textContent = accountData["Group"];
-  row.appendChild(groupColumn);
-
-  const usernameColumn = document.createElement("td");
-  usernameColumn.textContent = accountData["Username"];
-  row.appendChild(usernameColumn);
-
-  const proxyColumn = document.createElement("td");
-  proxyColumn.textContent = accountData.proxy;
-  row.appendChild(proxyColumn);
-
-  const postsColumn = document.createElement("td");
-  postsColumn.textContent = accountData["Number Of Posts"];
-  row.appendChild(postsColumn);
-
-  const followingColumn = document.createElement("td");
-  followingColumn.textContent = accountData["Number of Following"];
-  row.appendChild(followingColumn);
-
-  const followersColumn = document.createElement("td");
-  followersColumn.textContent = accountData["Number of Followers"];
-  row.appendChild(followersColumn);
-
-  const statusColumn = document.createElement("td");
-  statusColumn.textContent = "Active";
-  row.appendChild(statusColumn);
-
-  ` const settingsColumn = document.createElement("td");
-  settingsColumn.textContent = "Settings";
-  row.appendChild(settingsColumn);
-  const actionsColumn = document.createElement("td");
-  actionsColumn.textContent = "Actions";
-  row.appendChild(actionsColumn);;`;
-
+  
   tbody.appendChild(row);
   return row;
-}
+  }
+  
 
 function saveAccountData() {
   const username = document.querySelector('input[name="username"]').value;
@@ -55,22 +30,21 @@ function saveAccountData() {
 
   // Create an object representing the account data
   const accountData = {
-    Group: "test",
-    Username: username,
-    Password: password,
-    Proxy: proxy,
-    RecoveryEmail: "",
-    RecoveryPass: "",
-    Phone: "",
-    Cookies:
-      "eyJjb29NGY2ODA2NDgyNmEyZjAxYzI1OTU2NDliNWZlNzk0YyJ9LHsiZG9t3aXR0ZXIuY29tIiFjRDQifV19",
-    NumberOfPosts: "44",
-    Fingerprint: "",
-    NumberOfFollowing: "3",
-    NumberOfFollowers: "2",
-    Status: "",
+    group: "test",
+    username: username,
+    password: password,
+    proxy: proxy,
+    recovery_email: "",
+    recovery_pass: "",
+    phone: "",
+    cookies: "eyJjb29NGY2ODA2NDgyNmEyZjAxYzI1OTU2NDliNWZlNzk0YyJ9LHsiZG9t3aXR0ZXIuY29tIiFjRDQifV19",
+    posts: "44",
+    fingerprint: "",
+    following: "3",
+    followers: "2",
+    status: "",
   };
-
+  
   // Insert the account data into the "accounts" table
   Api.DatabaseInsert([], accountData, accountsTableId)
     .then((insertedRecordId) =>

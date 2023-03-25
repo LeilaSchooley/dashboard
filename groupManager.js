@@ -1,38 +1,35 @@
-class Group {
-  constructor(name, accounts, description) {
-    this.name = name;
-    this.accounts = accounts;
-    this.number = accounts.length;
-    this.description = description;
+function insertGroupRow(data) {
+  // Get the table id of the Accounts table
+  var tableId = Api.GetDatabaseStructure().find(function (table) {
+    return table.name == "groups";
+  }).id;
+
+  // Get the columns for the Accounts table
+  var columns = Api.GetDatabaseStructure().find(function (table) {
+    return table.name == "groups";
+  }).columns;
+
+  // Create an object to hold the data for the new row
+  var row = {};
+
+  try {
+    // Populate the object with the data for the new row
+    row[columns.find((column) => column.name === "name").id] = data.name;
+    row[columns.find((column) => column.name === "description").id] =
+    data.description;
+    row[columns.find((column) => column.name === "accounts").id] =
+    data.accounts.join(",");
+  } catch (error) {
+    console.log(error.message);
   }
-}
-
-// Create a list to store all groups
-const groupList = [
-  {
-    name: "Group 1",
-    accounts: [
-      { id: 1, username: "user1", proxy: "proxy1" },
-      { id: 2, username: "user2", proxy: "proxy2" },
-      { id: 3, username: "user3", proxy: "proxy3" },
-    ],
-    number: 3,
-    description: "This is group 1.",
-  },
-  {
-    name: "Group 2",
-    accounts: [
-      { id: 4, username: "user4", proxy: "proxy4" },
-      { id: 5, username: "user5", proxy: "proxy5" },
-      { id: 6, username: "user6", proxy: "proxy6" },
-    ],
-    number: 3,
-    description: "This is group 2.",
-  },
-];
-
-function addGroupToGroupList(group) {
-  groupList.push(group);
+  // Insert the new row into the table
+  Api.DatabaseInsert([], row, tableId)
+    .then(() => {
+      console.log(`Row inserted successfully {tableId}`);
+    })
+    .catch((error) => {
+      console.log("Error inserting row:", error);
+    });
 }
 
 function fetchGroups() {
@@ -64,7 +61,7 @@ function fetchGroups() {
         // Add the object to the data array
         data.push(obj);
       });
-      loadAllAccountsData(data);
+        return data;
       // Print the data array to the log
     });
   } catch (e) {
@@ -73,7 +70,7 @@ function fetchGroups() {
 }
 
 // Render all groups in the group list on the page
-function renderGroups() {
+function renderGroups(groupList) {
   const table = document.querySelector("tbody");
   table.innerHTML = "";
 
@@ -91,64 +88,4 @@ function renderGroups() {
       `;
     table.appendChild(row);
   });
-}
-
-// Call fetchGroups to populate the group list and render the groups on the page
-
-async function fetchAccounts() {
-  try {
-    const response = await fetch("/api/accounts");
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Function to populate the accounts dropdown with the fetched accounts
-function populateAccounts(accounts) {
-  const dropdown = document.querySelector(".ui.dropdown.multiple .menu");
-  dropdown.innerHTML = "";
-
-  accounts.forEach((account) => {
-    const item = document.createElement("div");
-    item.classList.add("item");
-    item.setAttribute("data-value", account.id);
-    item.textContent = `${account.username} - ${account.proxy}`;
-    dropdown.appendChild(item);
-  });
-
-  $(".ui.dropdown.multiple").dropdown({
-    allowAdditions: false,
-    fullTextSearch: true,
-    forceSelection: false,
-    selectOnNavigation: false,
-  });
-}
-
-// Function to add a new group with selected accounts
-function addGroup() {
-  const groupName = document.querySelector('input[name="groupName"]').value;
-  const groupDescription = document.querySelector(
-    'textarea[name="groupDescription"]'
-  ).value;
-  const selectedAccounts = document.querySelectorAll(
-    ".ui.dropdown.multiple .menu .selected.item"
-  );
-
-  const accountIds = [];
-  selectedAccounts.forEach((account) => {
-    accountIds.push(account.getAttribute("data-value"));
-  });
-
-  // Do something with the group data and selected account ids
-  const groupData = {
-    name: groupName,
-    description: groupDescription,
-    accounts: accountIds,
-  };
-  console.log(groupData);
-  // Call a function to save the new group to the database
-
-  addGroupToGroupList(groupData);
 }

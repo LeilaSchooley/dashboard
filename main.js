@@ -24,6 +24,46 @@ $(document).ready(function () {
     $(".mobile.only.grid .ui.vertical.menu").toggle(100);
   });
 
+
+  const menuItems = document.querySelectorAll(".ui.vertical.menu .item");
+
+  menuItems.forEach((item) => {
+    item.addEventListener("click", (event) => {
+      menuItems.forEach((otherItem) => {
+        otherItem.classList.remove("active");
+      });
+      item.classList.add("active");
+
+      if (event.target.textContent === "Accounts") {
+        removeTable();
+
+        createTableHeader(accountColumnNames);
+
+      } else if (event.target.textContent === "Groups") {
+        removeTable();
+    renderGroups(groupList)
+
+        createTableHeader(columnNames.group);
+        let groupList = fetchGroups()
+        renderGroups(groupList)
+
+
+      } else if (event.target.id === "tasks") {
+        removeTable();
+
+        createTableHeader(taskColumnNames);
+
+        renderAllTaskTables(tasks);
+      }
+    });
+  });
+
+
+
+
+
+
+
   $("#add-single").click(() => addAccountModal.classList.add("active"));
   $("#add-single").click(() => $("#addAccountModal").addClass("active"));
   $("#cancelAddAccountButton").click(() =>
@@ -34,15 +74,15 @@ $(document).ready(function () {
     saveAccountDatas();
   });
 
-  function insertRow(data) {
+  function insertAccountRow(data) {
     // Get the table id of the Accounts table
     var tableId = Api.GetDatabaseStructure().find(function (table) {
-      return table.name == "Accounts";
+      return table.name == "accounts";
     }).id;
 
     // Get the columns for the Accounts table
     var columns = Api.GetDatabaseStructure().find(function (table) {
-      return table.name == "Accounts";
+      return table.name == "accounts";
     }).columns;
 
     // Create an object to hold the data for the new row
@@ -50,28 +90,28 @@ $(document).ready(function () {
 
     try {
       // Populate the object with the data for the new row
-      row[columns.find((column) => column.name === "Group").id] = data.group;
-      row[columns.find((column) => column.name === "Username").id] =
+      row[columns.find((column) => column.name === "group").id] = data.group;
+      row[columns.find((column) => column.name === "username").id] =
         data.username;
-      row[columns.find((column) => column.name === "Password").id] =
+      row[columns.find((column) => column.name === "password").id] =
         data.password;
-      row[columns.find((column) => column.name === "Proxy").id] = data.proxy;
-      row[columns.find((column) => column.name === "Recovery Email").id] =
+      row[columns.find((column) => column.name === "proxy").id] = data.proxy;
+      row[columns.find((column) => column.name === "recovery_email").id] =
         data.recoveryEmail;
-      row[columns.find((column) => column.name === "Recovery Pass").id] =
+      row[columns.find((column) => column.name === "recovery_pass").id] =
         data.recoveryPass;
-      row[columns.find((column) => column.name === "Phone").id] = data.phone;
-      row[columns.find((column) => column.name === "Cookies").id] =
+      row[columns.find((column) => column.name === "phone").id] = data.phone;
+      row[columns.find((column) => column.name === "cookies").id] =
         data.cookies;
-      row[columns.find((column) => column.name === "Number Of Posts").id] =
+      row[columns.find((column) => column.name === "posts").id] =
         data.numberOfPosts;
-      row[columns.find((column) => column.name === "Fingerprint").id] =
+      row[columns.find((column) => column.name === "fingerprint").id] =
         data.fingerprint;
-      row[columns.find((column) => column.name === "Number of Following").id] =
+      row[columns.find((column) => column.name === "following").id] =
         data.numberOfFollowing;
-      row[columns.find((column) => column.name === "Number of Followers").id] =
+      row[columns.find((column) => column.name === "followers").id] =
         data.numberOfFollowers;
-      row[columns.find((column) => column.name === "Status").id] = data.status;
+      row[columns.find((column) => column.name === "status").id] = data.status;
     } catch (error) {
       console.log(error.message);
     }
@@ -145,7 +185,7 @@ $(document).ready(function () {
       status: "",
     };
 
-    insertRow(accountData);
+    insertAccountRow(accountData);
 
     // Call getAllAccounts function to get all the records in the Accounts table
   }
@@ -242,7 +282,7 @@ $(document).ready(function () {
       console.log(list);
       list.forEach((data) => {
         console.log(data);
-        insertRow(data);
+        insertAccountRow(data);
       });
 
       getAllAccounts();
@@ -256,82 +296,96 @@ $(document).ready(function () {
   });
   const taskManagerButton = document.getElementById("taskManagerButton");
   const taskManagerModal = document.getElementById("taskManagerModal");
-  const cancelBtn = document.querySelector('.ui.cancel.button');
-  const positiveBtn = document.querySelector('.ui.positive.button');
-  
+  const cancelBtn = document.querySelector(".ui.cancel.button");
+  const positiveBtn = document.querySelector(".ui.positive.button");
+
   taskManagerButton.addEventListener("click", () => {
     taskManagerModal.classList.toggle("active");
     document.body.classList.toggle("modal-open");
-  
-    $('#tweetModal').modal('show');
+
+    $("#tweetModal").modal("show");
   });
-  
-  cancelBtn.addEventListener('click', function() {
-    taskManagerModal.classList.toggle('active');
+
+  cancelBtn.addEventListener("click", function () {
+    taskManagerModal.classList.toggle("active");
     document.body.classList.toggle("modal-open");
   });
-  
-  positiveBtn.addEventListener('click', function() {
-    taskManagerModal.classList.remove('active');
-    document.body.classList.remove("modal-open");
-    console.log("yes")
 
+  positiveBtn.addEventListener("click", function () {
+    taskManagerModal.classList.remove("active");
+    document.body.classList.remove("modal-open");
+    console.log("yes");
   });
-  
+
   const accounts = [
     { id: 1, username: "user1" },
     { id: 2, username: "user2" },
     { id: 3, username: "user3" },
   ];
-  
 
   const addGroupButton = document.getElementById("addGroupButton");
   const addGroupModal = document.getElementById("addGroupModal");
   const addGroupBtn = document.getElementById("addGroupBtn");
 
-  addGroupBtn.addEventListener("click", ()=> {
-    console.log("yes")
-    groupInfo = new Group()
-  }
-  )
+  addGroupBtn.addEventListener("click", () => {
+    const groupNameInput = document.querySelector('input[name="groupName"]');
+    const groupDescriptionInput = document.querySelector(
+      'textarea[name="groupDescription"]'
+    );
+    const accountsInput = document.querySelector('input[name="accounts"]');
+
+    // Create the group object
+    const group = {
+      name: groupNameInput.value,
+      description: groupDescriptionInput.value,
+      accounts: accountsInput.value.split(","),
+    };
+
+    console.log(group);
+
+    insertGroupRow(group);
+
+    let groupList = fetchGroups()
+    renderGroups(groupList)
+
+  });
   addGroupButton.addEventListener("click", () => {
     addGroupModal.classList.toggle("active");
     document.body.classList.toggle("modal-open");
-  
-    $('#addGroupModal').modal('show');
+
+    $("#addGroupModal").modal("show");
   });
 
-function loadAccounts(accounts) {
-  const dropdown = document.querySelector(".ui.dropdown.multiple");
-  const menu = dropdown.querySelector(".menu");
-  const accountsInput = dropdown.querySelector('input[name="accounts"]');
+  function loadAccounts(accounts) {
+    const dropdown = document.querySelector(".ui.dropdown.multiple");
+    const menu = dropdown.querySelector(".menu");
+    const accountsInput = dropdown.querySelector('input[name="accounts"]');
 
-  // Clear the dropdown
-  menu.innerHTML = "";
+    // Clear the dropdown
+    menu.innerHTML = "";
 
-  // Loop through the accounts and add them to the dropdown
-  accounts.forEach((account) => {
-    const item = document.createElement("div");
-    item.classList.add("item");
-    item.dataset.value = account.id;
-    item.innerHTML = account.username;
+    // Loop through the accounts and add them to the dropdown
+    accounts.forEach((account) => {
+      const item = document.createElement("div");
+      item.classList.add("item");
+      item.dataset.value = account.id;
+      item.innerHTML = account.username;
 
-    // Add click event to select or deselect account
-    item.addEventListener("click", () => {
-      item.classList.toggle("selected");
-      const selectedItems = menu.querySelectorAll(".selected");
-      const selectedAccountIds = Array.from(selectedItems).map(
-        (item) => item.dataset.value
-      );
-      accountsInput.value = selectedAccountIds.join(",");
+      // Add click event to select or deselect account
+      item.addEventListener("click", () => {
+        item.classList.toggle("selected");
+        const selectedItems = menu.querySelectorAll(".selected");
+        const selectedAccountIds = Array.from(selectedItems).map(
+          (item) => item.dataset.value
+        );
+        accountsInput.value = selectedAccountIds.join(",");
+      });
+
+      menu.appendChild(item);
     });
 
-    menu.appendChild(item);
-  });
-
-  // Initialize the dropdown
-  $(dropdown).dropdown("restore defaults");
-}
-loadAccounts(accounts)
-
+    // Initialize the dropdown
+    $(dropdown).dropdown("restore defaults");
+  }
+  loadAccounts(accounts);
 });
