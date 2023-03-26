@@ -15,7 +15,6 @@ const columnNames = {
 };
 
 $(document).ready(function () {
-  console.log("Creating tables");
 
   // Example usage for creating table headers for groups, accounts, and tasks:
   createTableHeader(columnNames.account);
@@ -69,14 +68,11 @@ let { tableId: accountTableId, columns: accountColumns } = getTableInfo("account
 
         createTableHeader(columnNames.group);
 
-    ({ tableId: accountTableId, columns: accountColumns } = getTableInfo("groups"));
-
-        removeTable();
-
-
-        createTableHeader(columnNames.group);
-       
-        fetchGroupss( accountTableId,accountColumns)
+        ({ tableId: accountTableId, columns: accountColumns } = getTableInfo("groups"));
+      
+        
+        
+        fetchGroups( accountTableId,accountColumns)
 
 
       } else if (event.target.id === "tasks") {
@@ -176,7 +172,7 @@ let { tableId: accountTableId, columns: accountColumns } = getTableInfo("account
         records.forEach(function (record) {
           // Create an object to hold the record data
           var obj = {};
-            console.log(columns)
+
           // Loop through each column and get the value for the current record
           columns.forEach(function (column) {
             obj[column.name] = record.data[column.id];
@@ -186,7 +182,7 @@ let { tableId: accountTableId, columns: accountColumns } = getTableInfo("account
           data.push(obj);
         });
 
-        console.log(data)
+
         loadAllAccountsData(data);
         // Print the data array to the log
       });
@@ -315,9 +311,9 @@ let { tableId: accountTableId, columns: accountColumns } = getTableInfo("account
           list.push(obj);
         }
       }
-      console.log(list);
+
       list.forEach((data) => {
-        console.log(data);
+
         insertAccountRow(data);
       });
 
@@ -391,7 +387,7 @@ let { tableId: accountTableId, columns: accountColumns } = getTableInfo("account
 
 
     createTableHeader(columnNames.group);
-    fetchGroupss()
+    fetchGroupss( accountTableId,accountColumns)
 
   });
 

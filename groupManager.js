@@ -1,4 +1,4 @@
-function insertGroupRow(tableId, columns) {
+function insertGroupRow(data) {
   // Get the table id of the Accounts table
 
   // Create an object to hold the data for the new row
@@ -43,10 +43,10 @@ function fetchGroups(tableId, columns) {
         // Add the object to the data array
         data.push(obj);
       });
-
+      // Print the data array to the log
+        
         renderGroups(data)
         
-      // Print the data array to the log
     });
   } catch (e) {
     console.log("Error: " + e.message);
@@ -70,5 +70,5 @@ function renderGroups(groupList) {
     </tr>
     `;
   });
-  $("#groups-table tbody").html(tableRows);
+  $("tbody").html(tableRows);
 }
