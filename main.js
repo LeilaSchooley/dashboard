@@ -24,6 +24,28 @@ $(document).ready(function () {
     $(".mobile.only.grid .ui.vertical.menu").toggle(100);
   });
 
+  function getTableInfo(tableName) {
+    // Get the table id
+    var tableId = Api.GetDatabaseStructure().find(function (table) {
+      return table.name === tableName;
+    }).id;
+  
+    // Get the columns
+    var columns = Api.GetDatabaseStructure().find(function (table) {
+      return table.name === tableName;
+    }).columns;
+    
+
+    
+    return  {tableId, columns};
+  }
+
+
+
+
+    
+let { tableId: accountTableId, columns: accountColumns } = getTableInfo("accounts");
+
 
   const menuItems = document.querySelectorAll(".ui.vertical.menu .item");
 
@@ -38,20 +60,29 @@ $(document).ready(function () {
         removeTable();
 
         createTableHeader(columnNames.account);
+        ({ tableId: accountTableId, columns: accountColumns } = getTableInfo("accounts"));
+        getAllAccounts(accountTableId, accountColumns);
 
       } else if (event.target.textContent === "Groups") {
         removeTable();
 
+
         createTableHeader(columnNames.group);
-        let groupList = fetchGroups()
-        console.log(groupList)
-        renderGroups(groupList)
+
+    ({ tableId: accountTableId, columns: accountColumns } = getTableInfo("groups"));
+
+        removeTable();
+
+
+        createTableHeader(columnNames.group);
+       
+        fetchGroupss( accountTableId,accountColumns)
 
 
       } else if (event.target.id === "tasks") {
         removeTable();
 
-        createTableHeader(taskColumnNames);
+        createTableHeader(columnNames.task);
 
         renderAllTaskTables(columnNames.task);
       }
@@ -72,6 +103,12 @@ $(document).ready(function () {
 
   $("#addAccountButton").click(function () {
     saveAccountDatas();
+       removeTable();
+
+        createTableHeader(columnNames.account);
+        ({ tableId: accountTableId, columns: accountColumns } = getTableInfo("accounts"));
+        getAllAccounts(accountTableId, accountColumns);
+
   });
 
   function insertAccountRow(data) {
@@ -126,25 +163,11 @@ $(document).ready(function () {
   }
 
 
-  function getTableInfo(tableName) {
-    // Get the table id
-    var tableId = Api.GetDatabaseStructure().find(function (table) {
-      return table.name === tableName;
-    }).id;
-  
-    // Get the columns
-    var columns = Api.GetDatabaseStructure().find(function (table) {
-      return table.name === tableName;
-    }).columns;
-  
-    return { tableId, columns };
-  }
 
-  function getAllAccounts() {
+  function getAllAccounts(tableId, columns ) {
     try {
-      // Get the table id of the Accounts table
-      let  tableId, columns = getTableInfo("accounts")
-
+   
+   
       // Create an array to hold the data
       var data = [];
 
@@ -153,7 +176,7 @@ $(document).ready(function () {
         records.forEach(function (record) {
           // Create an object to hold the record data
           var obj = {};
-
+            console.log(columns)
           // Loop through each column and get the value for the current record
           columns.forEach(function (column) {
             obj[column.name] = record.data[column.id];
@@ -162,6 +185,8 @@ $(document).ready(function () {
           // Add the object to the data array
           data.push(obj);
         });
+
+        console.log(data)
         loadAllAccountsData(data);
         // Print the data array to the log
       });
@@ -197,8 +222,11 @@ $(document).ready(function () {
 
     // Call getAllAccounts function to get all the records in the Accounts table
   }
+ 
+ 
 
-  getAllAccounts();
+        
+  getAllAccounts(accountTableId, accountColumns);
 
   const bulkImportButton = document.getElementById("bulkImportButton");
   const bulkImportModal = document.getElementById("bulkImportModal");
@@ -293,7 +321,14 @@ $(document).ready(function () {
         insertAccountRow(data);
       });
 
-      getAllAccounts();
+
+    removeTable()
+    createTableHeader(columnNames.account);
+        ({ tableId: accountTableId, columns: accountColumns } = getTableInfo("accounts"));
+        getAllAccounts(accountTableId, accountColumns);
+
+
+
     };
     reader.readAsText(file);
 
@@ -322,7 +357,7 @@ $(document).ready(function () {
   positiveBtn.addEventListener("click", function () {
     taskManagerModal.classList.remove("active");
     document.body.classList.remove("modal-open");
-    console.log("yes");
+
   });
 
   const accounts = [
@@ -352,17 +387,52 @@ $(document).ready(function () {
     console.log(group);
 
     insertGroupRow(group);
+    removeTable();
 
-    let groupList = fetchGroups()
-    renderGroups(groupList)
+
+    createTableHeader(columnNames.group);
+    fetchGroupss()
 
   });
+
+
+  
   addGroupButton.addEventListener("click", () => {
     addGroupModal.classList.toggle("active");
     document.body.classList.toggle("modal-open");
 
     $("#addGroupModal").modal("show");
   });
+
+
+function fetchGroupss(tableId, columns ) {
+  try {
+
+    var data = [];
+
+    // Loop through each record in the table
+    Api.DatabaseSelect({}, tableId).then(function (records) {
+      records.forEach(function (record) {
+        // Create an object to hold the record data
+        var obj = {};
+
+        // Loop through each column and get the value for the current record
+        columns.forEach(function (column) {
+          obj[column.name] = record.data[column.id];
+        });
+
+        // Add the object to the data array
+        data.push(obj);
+      });
+
+        renderGroups(data)
+        
+      // Print the data array to the log
+    });
+  } catch (e) {
+    console.log("Error: " + e.message);
+  }
+}
 
   function loadAccounts(accounts) {
     const dropdown = document.querySelector(".ui.dropdown.multiple");

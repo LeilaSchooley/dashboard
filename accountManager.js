@@ -2,6 +2,7 @@ function loadAccountData(accountData) {
   const tbody = document.querySelector("tbody");
   const row = document.createElement("tr");
   
+  
   row.appendChild(document.createElement("td")).textContent = accountData["group"];
   row.appendChild(document.createElement("td")).textContent = accountData["username"];
   row.appendChild(document.createElement("td")).textContent = accountData.proxy;
@@ -10,7 +11,7 @@ function loadAccountData(accountData) {
   row.appendChild(document.createElement("td")).textContent = accountData["followers"];
   row.appendChild(document.createElement("td")).textContent = accountData["status"];
 
-  
+
   tbody.appendChild(row);
   return row;
   }
