@@ -3,12 +3,12 @@ function insertGroupRow(data) {
   var row = {};
   
     var tableId = Api.GetDatabaseStructure().find(function (table) {
-      return table.name == "accounts";
+      return table.name == "groups";
     }).id;
 
     // Get the columns for the Accounts table
     var columns = Api.GetDatabaseStructure().find(function (table) {
-      return table.name == "accounts";
+      return table.name == "groups";
     }).columns;
 
 
