@@ -1,16 +1,22 @@
-function insertGroupRow(data, tableId, columns) {
+function insertGroupRow(data) {
   // Create an object to hold the data for the new row
   var row = {};
+  
+    var tableId = Api.GetDatabaseStructure().find(function (table) {
+      return table.name == "accounts";
+    }).id;
 
-  try {
+    // Get the columns for the Accounts table
+    var columns = Api.GetDatabaseStructure().find(function (table) {
+      return table.name == "accounts";
+    }).columns;
+
+
     // Populate the object with the data for the new row
     row[columns.find((column) => column.name === "name").id] = data.name;
     row[columns.find((column) => column.name === "description").id] = data.description;
     row[columns.find((column) => column.name === "accounts").id] = data.accounts.join(",");
     row[columns.find((column) => column.name === "group_id").id] = "1";
-  } catch (error) {
-    console.log(error.message);
-  }
 
   // Insert the new row into the table
   Api.DatabaseInsert([], row, tableId)
