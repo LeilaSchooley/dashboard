@@ -1,23 +1,20 @@
 function insertGroupRow(data, tableId, columns) {
-  // Get the table id of the Accounts table
-
   // Create an object to hold the data for the new row
   var row = {};
 
   try {
     // Populate the object with the data for the new row
     row[columns.find((column) => column.name === "name").id] = data.name;
-    row[columns.find((column) => column.name === "description").id] =
-    data.description;
-    row[columns.find((column) => column.name === "accounts").id] =
-    data.accounts.join(",");
+    row[columns.find((column) => column.name === "description").id] = data.description;
+    row[columns.find((column) => column.name === "accounts").id] = data.accounts.join(",");
   } catch (error) {
     console.log(error.message);
   }
+
   // Insert the new row into the table
   Api.DatabaseInsert([], row, tableId)
     .then(() => {
-      console.log(`Row inserted successfully {tableId}`);
+      console.log(`Row inserted successfully ${tableId}`);
     })
     .catch((error) => {
       console.log("Error inserting row:", error);

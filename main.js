@@ -382,6 +382,8 @@ let { tableId: accountTableId, columns: accountColumns } = getTableInfo("account
 
     console.log(group);
 
+    ({ tableId: accountTableId, columns: accountColumns } = getTableInfo("groups"));
+
     insertGroupRow(group, accountTableId,accountColumns);
     removeTable();
 
