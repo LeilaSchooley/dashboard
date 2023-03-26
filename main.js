@@ -382,12 +382,12 @@ let { tableId: accountTableId, columns: accountColumns } = getTableInfo("account
 
     console.log(group);
 
-    insertGroupRow(group);
+    insertGroupRow(group, accountTableId,accountColumns);
     removeTable();
 
 
     createTableHeader(columnNames.group);
-    fetchGroupss( accountTableId,accountColumns)
+    fetchGroups( accountTableId,accountColumns)
 
   });
 
@@ -401,34 +401,6 @@ let { tableId: accountTableId, columns: accountColumns } = getTableInfo("account
   });
 
 
-function fetchGroupss(tableId, columns ) {
-  try {
-
-    var data = [];
-
-    // Loop through each record in the table
-    Api.DatabaseSelect({}, tableId).then(function (records) {
-      records.forEach(function (record) {
-        // Create an object to hold the record data
-        var obj = {};
-
-        // Loop through each column and get the value for the current record
-        columns.forEach(function (column) {
-          obj[column.name] = record.data[column.id];
-        });
-
-        // Add the object to the data array
-        data.push(obj);
-      });
-
-        renderGroups(data)
-        
-      // Print the data array to the log
-    });
-  } catch (e) {
-    console.log("Error: " + e.message);
-  }
-}
 
   function loadAccounts(accounts) {
     const dropdown = document.querySelector(".ui.dropdown.multiple");

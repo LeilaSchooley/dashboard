@@ -1,4 +1,4 @@
-function insertGroupRow(data) {
+function insertGroupRow(data, tableId, columns) {
   // Get the table id of the Accounts table
 
   // Create an object to hold the data for the new row
