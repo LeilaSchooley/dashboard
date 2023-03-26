@@ -1,32 +1,3 @@
-function insertGroupRow(data) {
-  // Create an object to hold the data for the new row
-  var row = {};
-  
-    var tableId = Api.GetDatabaseStructure().find(function (table) {
-      return table.name == "groups";
-    }).id;
-
-    // Get the columns for the Accounts table
-    var columns = Api.GetDatabaseStructure().find(function (table) {
-      return table.name == "groups";
-    }).columns;
-
-
-    // Populate the object with the data for the new row
-    row[columns.find((column) => column.name === "name").id] = data.name;
-    row[columns.find((column) => column.name === "description").id] = data.description;
-    row[columns.find((column) => column.name === "accounts").id] = data.accounts.join(",");
-    row[columns.find((column) => column.name === "group_id").id] = "1";
-
-  // Insert the new row into the table
-  Api.DatabaseInsert([], row, tableId)
-    .then(() => {
-      console.log(`Row inserted successfully ${tableId}`);
-    })
-    .catch((error) => {
-      console.log("Error inserting row:", error);
-    });
-}
 
 function fetchGroups(tableId, columns) {
   try {
@@ -63,16 +34,96 @@ function renderGroups(groupList) {
   let tableRows = "";
   groupList.forEach((group) => {
     tableRows += `
-    <tr>
+    <tr data-group-id="${group.id}">
       <td>${group.name}</td>
       <td>1</td>
       <td>${group.description}</td>
       <td>
-        <a href="#">Edit</a> |
-        <a href="#">Delete</a>
+        <a href="#" class="edit-group-btn">Edit</a> |
+        <a href="#" class="delete-group-btn">Delete</a>
       </td>
     </tr>
     `;
   });
   $("tbody").html(tableRows);
+
+  // Add event listeners for edit and delete buttons
+  $(".edit-group-btn").click(function() {
+    const groupId = $(this).closest("tr").data("group-id");
+    const group = groupList.find(g => g.id === groupId);
+    $("#edit-group-name").val(group.name);
+    $("#edit-group-description").val(group.description);
+    $("#edit-group-modal")
+      .modal("show")
+      .data("group-id", groupId);
+  });
+
+  $(".delete-group-btn").click(function() {
+    const groupId = $(this).closest("tr").data("group-id");
+    deleteGroup(groupId);
+  });
+
+  // Add event listener for save button in edit group modal
+  $("#edit-group-modal .positive.button").click(function() {
+    const groupId = $("#edit-group-modal").data("group-id");
+    const newName = $("#edit-group-name").val();
+    const newDescription = $("#edit-group-description").val();
+    editGroup(groupId, newName, newDescription);
+    $("#edit-group-modal").modal("hide");
+  });
+}
+
+function editGroupName(groupId, newName) {
+  // Send an API request to update the group name
+  Api.DatabaseUpdateGroup(groupId, { Name: newName }, 1)
+    .then((response) => {
+      // Update the group name in the UI
+      const groupRow = $(`tr[data-group-id='${groupId}']`);
+      groupRow.find(".group-name").text(newName);
+    })
+    .catch((error) => {
+      console.log("Error editing group name:", error);
+    });
+}
+function deleteGroup(groupId) {
+  // Send an API request to delete the group
+  Api.DatabaseDeleteGroupWithData(groupId, 1)
+    .then((response) => {
+      // Remove the group row from the UI
+      const groupRow = $(`tr[data-group-id='${groupId}']`);
+      groupRow.remove();
+    })
+    .catch((error) => {
+      console.log("Error deleting group:", error);
+    });
+}
+function addAccountsToGroup(groupId, accountIds) {
+  // Send an API request to add the accounts to the group
+  Api.DatabaseUpdate(
+    groupId,
+    { AccountIds: accountIds },
+    1
+  )
+    .then((response) => {
+      // Reload the page to update the UI
+      location.reload();
+    })
+    .catch((error) => {
+      console.log("Error adding accounts to group:", error);
+    });
+}
+function removeAccountsFromGroup(groupId, accountIds) {
+  // Send an API request to remove the accounts from the group
+  Api.DatabaseUpdate(
+    groupId,
+    { AccountIds: accountIds },
+    1
+  )
+    .then((response) => {
+      // Reload the page to update the UI
+      location.reload();
+    })
+    .catch((error) => {
+      console.log("Error removing accounts from group:", error);
+    });
 }
