@@ -7,6 +7,7 @@ function insertGroupRow(data, tableId, columns) {
     row[columns.find((column) => column.name === "name").id] = data.name;
     row[columns.find((column) => column.name === "description").id] = data.description;
     row[columns.find((column) => column.name === "accounts").id] = data.accounts.join(",");
+    row[columns.find((column) => column.name === "group_id").id] = "1";
   } catch (error) {
     console.log(error.message);
   }
