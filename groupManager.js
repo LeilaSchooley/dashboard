@@ -35,7 +35,7 @@ function renderGroups(groupList) {
   groupList.forEach((group) => {
     console.log(group);
     tableRows += `
-    <tr data-group-id="${group["group-id"]}">
+    <tr data-group-id="${group["group_id"]}">
       <td>${group.name}</td>
       <td>1</td>
       <td>${group.description}</td>
