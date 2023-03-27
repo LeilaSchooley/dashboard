@@ -52,7 +52,11 @@ function renderGroups(groupList) {
   // Add event listeners for edit and delete buttons
   $(".edit-group-btn").click(function() {
     const groupId = $(this).closest("tr").data("group-id");
+    console.log(groupId);
+
     const group = groupList.find(g => g.id === groupId);
+    console.log(group);
+
     $("#edit-group-name").val(group.name);
     $("#edit-group-description").val(group.description);
     $("#edit-group-modal")
