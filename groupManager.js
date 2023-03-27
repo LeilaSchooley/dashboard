@@ -32,6 +32,7 @@ function fetchGroups(tableId, columns) {
 
 function renderGroups(groupList) {
   let tableRows = "";
+  console.log(groupList);
   groupList.forEach((group) => {
     console.log(group);
     console.log(group["group_id"]);
