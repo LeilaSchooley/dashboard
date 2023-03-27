@@ -33,6 +33,7 @@ function fetchGroups(tableId, columns) {
 function renderGroups(groupList) {
   let tableRows = "";
   groupList.forEach((group) => {
+    console.log(group);
     tableRows += `
     <tr data-group-id="${group["group-id"]}">
       <td>${group.name}</td>
