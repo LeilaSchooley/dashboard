@@ -55,7 +55,7 @@ function renderGroups(groupList) {
     const groupId = $(this).closest("tr").data("group-id");
     console.log(groupId);
 
-    const group = groupList.find(g => g.group_id === groupId);
+    const group = groupList.find(g => g.group_id == groupId);
     console.log(group);
 
     $("#edit-group-name").val(group.name);
