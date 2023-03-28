@@ -75,7 +75,7 @@ function renderGroups(groupList) {
     const groupId = $("#edit-group-modal").data("group-id");
     const newName = $("#edit-group-name").val();
     const newDescription = $("#edit-group-description").val();
-    editGroup(groupId, newName, newDescription);
+    editGroupName(groupId, newName, newDescription);
     $("#edit-group-modal").modal("hide");
   });
 }
