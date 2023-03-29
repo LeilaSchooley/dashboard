@@ -31,7 +31,7 @@ function saveAccountData() {
 
   // Create an object representing the account data
   const accountData = {
-    group: "test",
+
     username: username,
     password: password,
     proxy: proxy,
