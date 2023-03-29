@@ -16,13 +16,6 @@ const columnNames = {
 
 $(document).ready(function () {
 
-  // Example usage for creating table headers for groups, accounts, and tasks:
-  createTableHeader(columnNames.account);
-  // Code to be executed after the DOM has loaded
-  $(".ui.toggle.button").click(function () {
-    $(".mobile.only.grid .ui.vertical.menu").toggle(100);
-  });
-
   function getTableInfo(tableName) {
     // Get the table id
     var tableId = Api.GetDatabaseStructure().find(function (table) {
@@ -40,72 +33,6 @@ $(document).ready(function () {
   }
 
 
-
-
-    
-let { tableId: accountTableId, columns: accountColumns } = getTableInfo("accounts");
-
-
-  const menuItems = document.querySelectorAll(".ui.vertical.menu .item");
-
-  menuItems.forEach((item) => {
-    item.addEventListener("click", (event) => {
-      menuItems.forEach((otherItem) => {
-        otherItem.classList.remove("active");
-      });
-      item.classList.add("active");
-
-      if (event.target.textContent === "Accounts") {
-        removeTable();
-
-        createTableHeader(columnNames.account);
-        ({ tableId: accountTableId, columns: accountColumns } = getTableInfo("accounts"));
-        getAllAccounts(accountTableId, accountColumns);
-
-      } else if (event.target.textContent === "Groups") {
-        removeTable();
-
-
-        createTableHeader(columnNames.group);
-
-        ({ tableId: accountTableId, columns: accountColumns } = getTableInfo("groups"));
-      
-        
-        
-        fetchGroups( accountTableId,accountColumns)
-
-
-      } else if (event.target.id === "tasks") {
-        removeTable();
-
-        createTableHeader(columnNames.task);
-
-        renderAllTaskTables(columnNames.task);
-      }
-    });
-  });
-
-
-
-
-
-
-
-  $("#add-single").click(() => addAccountModal.classList.add("active"));
-  $("#add-single").click(() => $("#addAccountModal").addClass("active"));
-  $("#cancelAddAccountButton").click(() =>
-    $("#addAccountModal").removeClass("active")
-  );
-
-  $("#addAccountButton").click(function () {
-    saveAccountDatas();
-       removeTable();
-
-        createTableHeader(columnNames.account);
-        ({ tableId: accountTableId, columns: accountColumns } = getTableInfo("accounts"));
-        getAllAccounts(accountTableId, accountColumns);
-
-  });
 
   function insertAccountRow(data) {
     // Get the table id of the Accounts table
@@ -159,7 +86,7 @@ let { tableId: accountTableId, columns: accountColumns } = getTableInfo("account
   }
 
 
-
+  
   function getAllAccounts(tableId, columns ) {
     try {
    
@@ -190,39 +117,87 @@ let { tableId: accountTableId, columns: accountColumns } = getTableInfo("account
       console.log("Error: " + e.message);
     }
   }
+  
+  // Example usage for creating table headers for groups, accounts, and tasks:
+  createTableHeader(columnNames.account);
+  // Code to be executed after the DOM has loaded
+  $(".ui.toggle.button").click(function () {
+    $(".mobile.only.grid .ui.vertical.menu").toggle(100);
+  });
 
-  function saveAccountDatas() {
-    const username = document.querySelector('input[name="username"]').value;
-    const password = document.querySelector('input[name="password"]').value;
-    const proxy = document.querySelector('input[name="proxy"]').value;
-    // do something with the values
-
-    const accountData = {
-      group: "test",
-      username: username,
-      password: password,
-      proxy: proxy,
-      recoveryEmail: "",
-      recoveryPass: "",
-      phone: "",
-      cookies:
-        "eyJjb29NGY2ODA2NDgyNmEyZjAxYzI1OTU2NDliNWZlNzk0YyJ9LHsiZG9t3aXR0ZXIuY29tIiFjRDQifV19",
-      numberOfPosts: "44",
-      fingerprint: "",
-      numberOfFollowing: "3",
-      numberOfFollowers: "2",
-      status: "",
-    };
-
-    insertAccountRow(accountData);
-
-    // Call getAllAccounts function to get all the records in the Accounts table
-  }
- 
- 
+  let { tableId: accountTableId, columns: accountColumns } = getTableInfo("accounts");
 
         
   getAllAccounts(accountTableId, accountColumns);
+
+  
+    
+
+
+  const menu = document.querySelector(".ui.vertical.menu");
+
+  menu.addEventListener("click", (event) => {
+    if (!event.target.matches(".item")) return;
+  
+    const menuItems = menu.querySelectorAll(".item");
+    menuItems.forEach((item) => item.classList.remove("active"));
+    event.target.classList.add("active");
+  
+    const target = event.target.textContent.trim();
+    switch (target) {
+      case "Accounts": {
+        const { tableId, columns } = getTableInfo("accounts");
+        removeTable();
+        createTableHeader(columnNames.account);
+        getAllAccounts(tableId, columns);
+        break;
+      }
+      case "Groups": {
+        removeTable();
+        createTableHeader(columnNames.group);
+        const { tableId, columns } = getTableInfo("groups");
+        fetchGroups(tableId, columns);
+        break;
+      }
+      case "Tasks": {
+        removeTable();
+        createTableHeader(columnNames.task);
+        renderAllTaskTables(columnNames.task);
+        break;
+      }
+    }
+  });
+  
+
+
+
+
+
+
+  $("#add-single").click(() => addAccountModal.classList.add("active"));
+  $("#add-single").click(() => $("#addAccountModal").addClass("active"));
+  $("#cancelAddAccountButton").click(() =>
+    $("#addAccountModal").removeClass("active")
+  );
+
+  $("#addAccountButton").click(function () {
+    saveAccountData();
+       removeTable();
+
+        createTableHeader(columnNames.account);
+        ({ tableId: accountTableId, columns: accountColumns } = getTableInfo("accounts"));
+        getAllAccounts(accountTableId, accountColumns);
+
+  });
+
+ 
+
+  
+  
+ 
+ 
+
+
 
   const bulkImportButton = document.getElementById("bulkImportButton");
   const bulkImportModal = document.getElementById("bulkImportModal");
@@ -318,8 +293,11 @@ let { tableId: accountTableId, columns: accountColumns } = getTableInfo("account
       });
 
 
+
+      
     removeTable()
     createTableHeader(columnNames.account);
+
         ({ tableId: accountTableId, columns: accountColumns } = getTableInfo("accounts"));
         getAllAccounts(accountTableId, accountColumns);
 
@@ -362,6 +340,29 @@ let { tableId: accountTableId, columns: accountColumns } = getTableInfo("account
     { id: 3, username: "user3" },
   ];
 
+  function insertGroupRows(name, description) {
+      // Create an object to hold the data for the new row
+      var row = {};
+      
+        var tableId = Api.GetDatabaseStructure().find(function (table) {
+          return table.name == "groups";
+        }).id;
+  
+
+        
+          const newGroup = {
+            name: name,
+            description: description
+          };
+
+          // Insert the new group into the table
+          Api.DatabaseInsertGroup( newGroup, tableId).then(function(result) {
+            console.log("New group inserted with ID: " + result.id);
+          }).catch(function(error) {
+            console.log("Error inserting new group: " + error.message);
+          });
+    }
+
   const addGroupButton = document.getElementById("addGroupButton");
   const addGroupModal = document.getElementById("addGroupModal");
   const addGroupBtn = document.getElementById("addGroupBtn");
@@ -384,7 +385,7 @@ let { tableId: accountTableId, columns: accountColumns } = getTableInfo("account
 
     ({ tableId: accountTableId, columns: accountColumns } = getTableInfo("groups"));
 
-    insertGroupRow(group, accountTableId,accountColumns);
+    insertGroupRows(group);
     removeTable();
 
 
