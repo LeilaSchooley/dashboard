@@ -19,19 +19,21 @@ function loadAccountData(accountData) {
 
 function saveAccountData() {
 
-  
-  // Do something with the account data object
+    // Do something with the account data object
   // Get the ID for the "accounts" table
   const accountsTableId = Api.GetDatabaseStructure().find(
     (table) => table.name === "accounts"
   ).id;
 
-  
+  console.log(accountsTableId);
   const username = document.querySelector('input[name="username"]').value;
   const password = document.querySelector('input[name="password"]').value;
   const proxy = document.querySelector('input[name="proxy"]').value;
   // do something with the values
 
+  console.log(username);
+  console.log(password);
+  console.log(proxy);
   // Create an object representing the account data
   const accountData = {
 
@@ -51,10 +53,12 @@ function saveAccountData() {
   
   // Insert the account data into the "accounts" table
   Api.DatabaseInsert([], accountData, accountsTableId)
-    .then((insertedRecordId) =>
+    .then((insertedRecordId) =>{
       console.log(`Inserted record with ID ${insertedRecordId}`)
+
       loadAccountData(accountData);
 
+    }
     )
     .catch((error) => console.error(`Error inserting record: ${error}`));
 
