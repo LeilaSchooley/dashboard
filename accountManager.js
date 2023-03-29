@@ -1,3 +1,56 @@
+
+function insertAccountRow(data) {
+  // Get the table id of the Accounts table
+  var tableId = Api.GetDatabaseStructure().find(function (table) {
+    return table.name == "accounts";
+  }).id;
+
+  // Get the columns for the Accounts table
+  var columns = Api.GetDatabaseStructure().find(function (table) {
+    return table.name == "accounts";
+  }).columns;
+
+  // Create an object to hold the data for the new row
+  var row = {};
+
+  try {
+    // Populate the object with the data for the new row
+    row[columns.find((column) => column.name === "group").id] = data.group;
+    row[columns.find((column) => column.name === "username").id] =
+      data.username;
+    row[columns.find((column) => column.name === "password").id] =
+      data.password;
+    row[columns.find((column) => column.name === "proxy").id] = data.proxy;
+    row[columns.find((column) => column.name === "recovery_email").id] =
+      data.recoveryEmail;
+    row[columns.find((column) => column.name === "recovery_pass").id] =
+      data.recoveryPass;
+    row[columns.find((column) => column.name === "phone").id] = data.phone;
+    row[columns.find((column) => column.name === "cookies").id] =
+      data.cookies;
+    row[columns.find((column) => column.name === "posts").id] =
+      data.numberOfPosts;
+    row[columns.find((column) => column.name === "fingerprint").id] =
+      data.fingerprint;
+    row[columns.find((column) => column.name === "following").id] =
+      data.numberOfFollowing;
+    row[columns.find((column) => column.name === "followers").id] =
+      data.numberOfFollowers;
+    row[columns.find((column) => column.name === "status").id] = data.status;
+  } catch (error) {
+    console.log(error.message);
+  }
+  // Insert the new row into the table
+  Api.DatabaseInsert([], row, tableId)
+    .then(() => {
+      console.log(`Row inserted successfully {tableId}`);
+    })
+    .catch((error) => {
+      console.log("Error inserting row:", error);
+    });
+}
+
+
 function loadAccountData(accountData) {
   const tbody = document.querySelector("tbody");
   const row = document.createElement("tr");
