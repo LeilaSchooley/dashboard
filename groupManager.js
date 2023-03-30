@@ -1,4 +1,27 @@
 
+function insertGroupRows(name, description) {
+  // Create an object to hold the data for the new row
+  var row = {};
+  
+    var tableId = Api.GetDatabaseStructure().find(function (table) {
+      return table.name == "accounts";
+    }).id;
+
+
+    
+      const newGroup = {
+        name: name,
+        description: description
+      };
+
+      // Insert the new group into the table
+      Api.DatabaseInsertGroup( newGroup, tableId).then(function(result) {
+        console.log("New group inserted with ID: " + result.id);
+      }).catch(function(error) {
+        console.log("Error inserting new group: " + error.message);
+      });
+}
+
 function fetchGroups(tableId, columns) {
   try {
 
