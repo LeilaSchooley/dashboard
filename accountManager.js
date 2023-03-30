@@ -1,5 +1,5 @@
 
-function insertAccountRow(data) {
+function insertAccountRow(data) { 
   // Get the table id of the Accounts table
   var tableId = Api.GetDatabaseStructure().find(function (table) {
     return table.name == "accounts";
