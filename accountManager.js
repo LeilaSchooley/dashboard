@@ -27,16 +27,16 @@ function insertAccountRow(data) {
       data.recoveryPass;
     row[columns.find((column) => column.name === "phone").id] = data.phone;
     row[columns.find((column) => column.name === "cookies").id] =
-      data.cookies;
+    "";
     row[columns.find((column) => column.name === "posts").id] =
-      data.numberOfPosts;
+    "";
     row[columns.find((column) => column.name === "fingerprint").id] =
-      data.fingerprint;
+    "";
     row[columns.find((column) => column.name === "following").id] =
-      data.numberOfFollowing;
+    "";
     row[columns.find((column) => column.name === "followers").id] =
-      data.numberOfFollowers;
-    row[columns.find((column) => column.name === "status").id] = data.status;
+    "";
+    row[columns.find((column) => column.name === "status").id] = "";
   } catch (error) {
     console.log(error.message);
   }
@@ -104,16 +104,7 @@ function saveAccountData() {
     status: "",
   };
   
-  // Insert the account data into the "accounts" table
-  Api.DatabaseInsert([], accountData, accountsTableId)
-    .then((insertedRecordId) =>{
-      console.log(`Inserted record with ID ${insertedRecordId}`)
-
-      loadAccountData(accountData);
-
-    }
-    )
-    .catch((error) => console.error(`Error inserting record: ${error}`));
+  insertAccountRow(accountData)
 
 }
 
