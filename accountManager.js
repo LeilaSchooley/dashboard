@@ -102,8 +102,13 @@ function saveAccountData() {
     status: "",
   };
   
-  insertAccountRow(accountData)
-
+  Api.DatabaseInsert([], accountData, tableId)
+    .then(() => {
+      console.log(`Row inserted successfully {tableId}`);
+    })
+    .catch((error) => {
+      console.log("Error inserting row:", error);
+    });
 }
 
 function loadAllAccountsData(data) {
