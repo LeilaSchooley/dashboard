@@ -15,7 +15,7 @@ function insertAccountRow(data) {
 
   try {
     // Populate the object with the data for the new row
-    row[columns.find((column) => column.name === "group").id] = data.group;
+
     row[columns.find((column) => column.name === "username").id] =
       data.username;
     row[columns.find((column) => column.name === "password").id] =
