@@ -102,7 +102,7 @@ function saveAccountData() {
     status: "",
   };
   
-  Api.DatabaseInsert([], accountData, tableId)
+  Api.DatabaseInsert([], accountData, accountsTableId)
     .then(() => {
       console.log(`Row inserted successfully {tableId}`);
     })
