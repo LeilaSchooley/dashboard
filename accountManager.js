@@ -13,7 +13,7 @@ function insertAccountRow(data) {
   // Create an object to hold the data for the new row
   var row = {};
 
-  try {
+
     // Populate the object with the data for the new row
 
     row[columns.find((column) => column.name === "username").id] =
@@ -22,10 +22,10 @@ function insertAccountRow(data) {
       data.password;
     row[columns.find((column) => column.name === "proxy").id] = data.proxy;
     row[columns.find((column) => column.name === "recovery_email").id] =
-      data.recoveryEmail;
+    "";
     row[columns.find((column) => column.name === "recovery_pass").id] =
-      data.recoveryPass;
-    row[columns.find((column) => column.name === "phone").id] = data.phone;
+    "";
+    row[columns.find((column) => column.name === "phone").id] = "";
     row[columns.find((column) => column.name === "cookies").id] =
     "";
     row[columns.find((column) => column.name === "posts").id] =
@@ -37,9 +37,7 @@ function insertAccountRow(data) {
     row[columns.find((column) => column.name === "followers").id] =
     "";
     row[columns.find((column) => column.name === "status").id] = "";
-  } catch (error) {
-    console.log(error.message);
-  }
+  
   // Insert the new row into the table
   Api.DatabaseInsert([], row, tableId)
     .then(() => {
