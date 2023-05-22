@@ -1,0 +1,88 @@
+{
+  "data": {
+    "list": [
+      {
+        "acc_id": "12",
+        "id": "j73p48t",
+        "share_info": [],
+        "batch_id": "0",
+        "domain_name": "",
+        "name": "",
+        "login_user": "",
+        "password": "",
+        "login_user_comment": "",
+        "last_openfb_time": "",
+        "created_time": "2023-05-20 22:01:15",
+        "ip": "",
+        "ip_country": "",
+        "user_proxy_config": {
+          "proxy_soft": "no_proxy",
+          "proxy_type": "",
+          "proxy_host": "",
+          "proxy_port": "",
+          "proxy_user": "",
+          "proxy_password": ""
+        },
+        "fbcc_proxy_acc_id": "0",
+        "fbcc_user_tag": [],
+        "batch_name": ""
+      },
+      {
+        "acc_id": "11",
+        "id": "j73p2go",
+        "share_info": [],
+        "batch_id": "0",
+        "domain_name": "",
+        "name": "",
+        "login_user": "",
+        "password": "",
+        "login_user_comment": "",
+        "last_openfb_time": "",
+        "created_time": "2023-05-20 21:56:32",
+        "ip": "",
+        "ip_country": "",
+        "user_proxy_config": {
+          "proxy_soft": "no_proxy",
+          "proxy_type": "",
+          "proxy_host": "",
+          "proxy_port": "",
+          "proxy_user": "",
+          "proxy_password": ""
+        },
+        "fbcc_proxy_acc_id": "0",
+        "fbcc_user_tag": [],
+        "batch_name": ""
+      },
+      {
+        "acc_id": "14",
+        "id": "j73pabf",
+        "share_info": [],
+        "batch_id": "0",
+        "domain_name": "",
+        "name": "",
+        "login_user": "",
+        "password": "",
+        "login_user_comment": "",
+        "last_openfb_time": "",
+        "created_time": "2023-05-21 10:00:00",
+        "ip": "",
+        "ip_country": "",
+        "user_proxy_config": {
+          "proxy_soft": "no_proxy",
+          "proxy_type": "",
+          "proxy_host": "",
+          "proxy_port": "",
+          "proxy_user": "",
+          "proxy_password": ""
+        },
+        "fbcc_proxy_acc_id": "0",
+        "fbcc_user_tag": [],
+        "batch_name": ""
+      }
+    ],
+    "page": 1,
+    "page_size": 50
+  },
+  "code": 0,
+  "msg": "Success"
+}
